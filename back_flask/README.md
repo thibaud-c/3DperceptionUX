@@ -3,6 +3,12 @@
 $ pipenv shell
 $ python run.py
 
+## PROD
+pipenv install
+pipenv shell
+pm2 start run.py
+
+
 ## REST API
 
 ['POST'] Create User
