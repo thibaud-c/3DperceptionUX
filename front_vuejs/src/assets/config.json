@@ -1,5 +1,5 @@
 {
-	"URL_BACKEND":"http://localhost:3030/",
+	"URL_BACKEND":"http://localhost:1337/",
 	"URL_GETCONFIG":"api/v1/config/",
 	"URL_SETANSWER":"api/v1/"
 }

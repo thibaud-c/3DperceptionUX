@@ -35,7 +35,7 @@ export default {
     survey
   }
 }
-</script>
+</script>i
 
 <style>
 #app {
@@ -47,4 +47,8 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+</style>
+<style lang="scss">
+@import '../node_modules/bulma/bulma.sass';
+@import '../node_modules/bulma-steps-component/bulma-steps.sass';
 </style>

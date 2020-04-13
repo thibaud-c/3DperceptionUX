@@ -36,6 +36,10 @@ http://localhost:3030/api/v1/<user_id>
 
 -- DROP TABLE public.perception_ux;
 
+-- Table: public.perception_ux
+
+-- DROP TABLE public.perception_ux;
+
 CREATE TABLE public.perception_ux
 (
     id_poste integer NOT NULL,
@@ -52,21 +56,35 @@ CREATE TABLE public.perception_ux
     grew_density integer,
     grew_country character varying(128) COLLATE pg_catalog."default",
     frequency_3d integer,
+	technology_3d integer[],
     technology_3d_other character varying(128) COLLATE pg_catalog."default",
     participation integer,
     participation_3d integer,
+	participation_role integer[],
     participation_role_other character varying(128) COLLATE pg_catalog."default",
     participation_sujet integer,
     participation_sujet_other character varying(128) COLLATE pg_catalog."default",
     participation_number integer,
     colorblind_rg integer,
     colorblind_dc integer,
+	colorblind_pt integer,
     exercice_3d integer,
+    "E0Q0" integer,
+    "E0Q1" integer,
+    "E0Q2" integer,
+    "E1Q0" integer,
     "E1Q1" integer,
     "E1Q2" integer,
     "E1Q3" integer,
-    technology_3d integer[],
-    participation_role integer[],
+    "E1Q4" integer,
+    "E0Time" integer,
+    "E1Time" integer,
+    smile integer,
+    difficulty integer,
+    opinion3dpart integer,
+    comment character varying(1024) COLLATE pg_catalog."default",
+    followup integer,
+    email character varying(256) COLLATE pg_catalog."default",
     CONSTRAINT perception_ux_pkey PRIMARY KEY (id_poste)
 )
 WITH (

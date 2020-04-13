@@ -1,12 +1,14 @@
 {
   "apps": [{
       "name": "perc-back",
-      "script": "pipenv run python run.py",
+      "script": "run.py",
       "args": [""],
       "instances": "1",
       "wait_ready": true,
       "autorestart": true,
       "watch": false,
-      "max_memory_restart": "1G"
+      "max_memory_restart": "1G",
+      "interpreter":"pipenv",
+      "interpreter_args":"run python"
   }]
 }

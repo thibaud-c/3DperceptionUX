@@ -30,11 +30,9 @@ import App from './App.vue'
 import i18n from './i18n.js'
 
 //css bulma/leaflet
-import bulma from 'bulma'
 import 'leaflet/dist/leaflet.css';
-import 'bulma/bulma.sass'
+import bulma from 'bulma'
 Vue.use(bulma)
-import 'bulma-steps-component/bulma-steps.sass';
 import 'bulma-slider/dist/js/bulma-slider.min.js';
 import 'bulma-slider/dist/css/bulma-slider.min.css';
 
@@ -52,4 +50,3 @@ new Vue({
   i18n,
   render: h => h(App),
 }).$mount('#app')
-
