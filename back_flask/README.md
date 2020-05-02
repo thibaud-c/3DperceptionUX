@@ -30,20 +30,19 @@ http://localhost:3030/api/v1/<user_id>
 
 ## SQL
 
-* Create Table
-
--- Table: public.perception_ux
-
--- DROP TABLE public.perception_ux;
-
 -- Table: public.perception_ux
 
 -- DROP TABLE public.perception_ux;
 
 CREATE TABLE public.perception_ux
 (
+    -- CONFIGS
+
     id_poste integer NOT NULL,
     config json NOT NULL,
+
+    -- SOCIADEMOGRAPHY
+
     age integer,
     genre integer,
     education integer,
@@ -56,29 +55,83 @@ CREATE TABLE public.perception_ux
     grew_density integer,
     grew_country character varying(128) COLLATE pg_catalog."default",
     frequency_3d integer,
-	technology_3d integer[],
     technology_3d_other character varying(128) COLLATE pg_catalog."default",
     participation integer,
     participation_3d integer,
-	participation_role integer[],
     participation_role_other character varying(128) COLLATE pg_catalog."default",
     participation_sujet integer,
     participation_sujet_other character varying(128) COLLATE pg_catalog."default",
     participation_number integer,
     colorblind_rg integer,
     colorblind_dc integer,
-	colorblind_pt integer,
     exercice_3d integer,
+    technology_3d integer[],
+    participation_role integer[],
+    colorblind_pt integer,
+
+    -- PERCEPTION
+
+    "E0Time" integer,
+    "E0Inputs" json,
     "E0Q0" integer,
     "E0Q1" integer,
-    "E0Q2" integer,
+    "E0Q1C" json,
+    "E0Q2" integer[],
+    "E0Q2C" json,
+    "E0Q3" integer,
+
+    "E1Time" integer,
+    "E1Inputs" json,
     "E1Q0" integer,
     "E1Q1" integer,
-    "E1Q2" integer,
+    "E1Q1C" json,
+    "E1Q2" integer[],
+    "E1Q2C" json,
     "E1Q3" integer,
     "E1Q4" integer,
-    "E0Time" integer,
-    "E1Time" integer,
+    "E1Q5" integer[],
+    
+    "E2Time" integer,
+    "E2Inputs" json,
+    "E2Q0" integer,
+    "E2Q1" integer,
+    "E2Q1C" json,
+    "E2Q2" integer[],
+    "E2Q2C" json,
+    "E2Q3" integer,
+
+    "E3Time" integer,
+    "E3Inputs" json,
+    "E3Q0" integer,
+    "E3Q1" integer,
+    "E3Q1C" json,
+    "E3Q2" integer[],
+    "E3Q2C" json,
+    "E3Q3" integer,
+    "E3Q4" integer,
+
+    "E4Time" integer,
+    "E4Inputs" json,
+    "E4Q0" integer,
+    "E4Q1" integer,
+    "E4Q1C" json,
+    "E4Q2" integer[],
+    "E4Q2C" json,
+    "E4Q3" integer,
+
+    "E5Time" integer,
+    "E5Inputs" json,
+    "E5Q0" integer,
+    "E5Q1" integer,
+    "E5Q1C" json,
+    "E5Q2" integer[],
+    "E5Q2C" json,
+    "E5Q3" integer,
+    "E5Q5" integer[],
+
+    --FEEDBACK
+    hard_scene integer,
+    easy_scene integer,
     smile integer,
     difficulty integer,
     opinion3dpart integer,
