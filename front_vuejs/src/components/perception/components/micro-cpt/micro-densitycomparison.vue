@@ -24,13 +24,17 @@ SOFTWARE.
 <template lang="pug">
     #rootMIMGDensity
       // country
-      p.questiontitle.has-text-weight-semibold {{ $t('perc-lod-density') }}
-      img.size-scene-density(:src="'perception/lod/'+conf[0]+'.png'")
-      img.size-scene-density.separate-pics(:src="'perception/lod/'+conf[1]+'.png'")
+      p.questiontitle.has-text-weight-semibold(v-html="$t('perc-lod-density')")
+      span(v-for="model in conf")
+        img.size-scene-density.separate-pics(:src="'perception/'+context+'/'+model+'.png'")
       br.b-2
-      label.radio.pl-2(v-for="de,id in densities" :class="valid?'valid':'error'")
-          input(v-model='scene' type='radio' :value='id' name='denseradio' @change="reseterror") 
-          |    {{ $t(de) }}
+      label.checkbox.pl-2(v-for="ans in available_answers" :class="valid?'valid':'error'")
+          input(v-model='scene' type='checkbox' :value='ans' name='denseradio' @change="reseterror") 
+          |    {{ $t('perc-lod-density-'+ans) }}
+          //no answer
+      label.checkbox.pl-2(:class="valid?'valid':'error'")
+        input(v-model="scene" name="refuschecked" type='checkbox' :value='0' @change="reseterror") 
+        |   {{ $t("reponse-no-answer") }}     
       #sub-btn.mb-2
         //button.button.is-text(@click='') {{ $t('btn-previous') }}
         button.button.is-primary(@click='nextquestion') {{ $t('btn-valider') }}
@@ -39,11 +43,10 @@ SOFTWARE.
 <script>
 export default {
   name: 'lod-micro-ima-density',
-  props:['conf'],
+  props:['conf','context','available_answers'],
   data () {
     return {
-      scene:null,
-      densities:['perc-lod-density-left', 'perc-lod-density-none', 'perc-lod-density-right', 'reponse-no-answer'],
+      scene:[],
       valid:true,
     }
   },
@@ -57,28 +60,48 @@ export default {
     },
     mapping_scene(){
       // Map the answer to take into account the config
-      switch(this.scene){
-        case 0 :
-          return this.conf[0]
-        case 1 :
-          return 2
-        case 2 :
-          return this.conf[1]
-        case 3 :
-          return 3
-      } 
+      let result = []
+      this.scene.forEach(el => {
+        switch(el){
+          case 0 :
+            result.push(0);
+            break;
+          case 1 :
+            result.push(this.conf[0]);
+            break;
+          case 2 :
+            result.push(this.conf[1]);
+            break;
+          case 3 :
+            result.push(this.conf[2]);
+            break;
+          case 4 :
+            result.push(this.conf[3]);
+            break;
+        } 
+      });
+      return result;
     },
     validate(){
       //if checked
-      if(this.scene===null){
+      if(this.scene==[]){
         this.valid = false;
         return false;
       }
       return true;
     },
-    reseterror(){
+    reseterror(e){
       this.valid = true;
-    }
+      //if i dont know answer -> delete all answers
+      if(e.target.value == 0){
+        this.scene=[0]
+      }else{
+        //if previous was idk
+        if(this.scene.indexOf(0)!=-1){
+          this.scene.shift();
+        }
+      }
+    },
   }
 }
 </script>

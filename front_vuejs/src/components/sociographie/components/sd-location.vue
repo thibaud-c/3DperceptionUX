@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootLocation
+  #rootSD_L
     // location
     lo(v-if="lo_step==0" @nextlocation="nextquestion")
     lo_zip(v-if="lo_step==1" @nextlocation="nextquestion" :npa_cp="json_answer['location']")

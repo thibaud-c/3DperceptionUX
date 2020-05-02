@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootConsentement
+  #rootIC_C
     p.questiontitle.has-text-weight-semibold {{ $t('intro-cc-concentement') }}
     //text rules loop
     #rules(v-for="rule in consent_rules")

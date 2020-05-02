@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootMED_O
+  #rootSD_E_ME_O
     //precision other
     p.sub-question.has-text-weight-semibold.has-text-centered ★ 
     p.sub-question.has-text-weight-semibold  {{ $t('socio-ed-question+') }}
@@ -41,7 +41,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'micro-ed_o',
+  name: 'sd-education-micro-edo',
   data () {
     return {
       education_other:null,

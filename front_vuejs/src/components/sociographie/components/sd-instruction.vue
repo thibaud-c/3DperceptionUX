@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootWelcomeSocio
+  #rootSD_W
     p.questiontitle.has-text-weight-semibold {{ $t('socio-in-title') }}
     p.paragraph-text.has-text-grey.has-text-justified(v-html="$t('socio-in-explanation')")
     button.button.is-primary.mb-2(@click='addStep') {{ $t('btn-start') }}
@@ -30,7 +30,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'ic-welcome',
+  name: 'id-welcome',
   methods: {
     addStep(){
       //save and pass next question

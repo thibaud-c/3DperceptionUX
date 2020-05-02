@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootMDP
+  #rootSD_D_MD
     //Participation
     p.questiontitle.has-text-weight-semibold {{ $t('socio-dp-question') }}
     //participation loop
@@ -36,7 +36,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'micro-pa',
+  name: 'sd-participation-micro-pa',
   data () {
     return {
       attendancedp:null,

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootMOLO
+  #rootSD_L_ML
     // country
     p.questiontitle.has-text-weight-semibold {{ $t('socio-lo-question') }}
     label.radio.pl-2(v-for="loc,id in localisations" :class="valid?'valid':'error'")
@@ -35,7 +35,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'micro-lo',
+  name: 'sd-location-micro-lo',
   data () {
     return {
       localisation:null,

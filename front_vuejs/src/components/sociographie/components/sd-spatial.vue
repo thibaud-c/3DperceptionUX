@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootSpatial
+  #rootSD_S
     //viz3d 
-    p.questiontitle.has-text-weight-semibold {{ $t('socio-sp-question') }}
+    p.questiontitle.has-text-weight-semibold(v-html="$t('socio-sp-question')")
     #sub-btn.mb-2
       //button.button.is-text(@click='') {{ $t('btn-previous') }}
       button.button.is-primary(@click='nextquestion') {{ $t('btn-valider') }}

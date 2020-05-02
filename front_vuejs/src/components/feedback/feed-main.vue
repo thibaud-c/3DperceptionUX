@@ -24,13 +24,15 @@ SOFTWARE.
 <template lang="pug">
   #rootFeed
     intro(v-if="step==0" @nextfeedstep="addStep")
-    feedbacks(v-if="step==1" @nextfeedstep="addStep")
-    email(v-if="step==2" @nextfeedstep="addStep")
-    thankyou(v-if="step==3")
+    easyviews(v-if="step==1" @nextfeedstep="addStep")
+    feedbacks(v-if="step==2" @nextfeedstep="addStep")
+    email(v-if="step==3" @nextfeedstep="addStep")
+    thankyou(v-if="step==4")
 </template>
 
 <script>
 import intro from './components/fd-introduction.vue'
+import easyviews from './components/fd-easyview.vue'
 import feedbacks from './components/fd-feeds.vue'
 import email from './components/fd-email.vue'
 import thankyou from './components/fd-thankyou.vue'
@@ -40,6 +42,7 @@ export default {
   components : { 
     // liste des composants utilisés dans la div principale
     intro,
+    easyviews,
     feedbacks,
     email,
     thankyou
@@ -57,7 +60,7 @@ export default {
         this.json_answer.push(answer);
       }
       this.step++;
-      if(this.step>2){
+      if(this.step>3){
         //save database and pass next stage
         this.$emit('nextstage',this.obj_affectation(this.json_answer));
       }

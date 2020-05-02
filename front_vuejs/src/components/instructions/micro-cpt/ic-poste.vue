@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootPoste 
+  #rootIC_Po 
     p.questiontitle.has-text-weight-semibold {{ $t('intro-po-question') }}
     //input poste
     .control.poste-20

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootMDP_3d
+  #rootSD_P_M3
     //Participation
     p.sub-question.has-text-weight-semibold.has-text-centered ★ 
     p.sub-question.has-text-weight-semibold(v-html="$t('socio-dp-3d')")
@@ -37,7 +37,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'micro-pa-3d',
+  name: 'sd-participation-micro-3d',
   data () {
     return {
       attendance3d:null,

@@ -24,6 +24,7 @@ SOFTWARE.
 <template lang="pug">
   #ThreejsModel
     p.questiontitle.has-text-weight-semibold {{ $t('perc-lod-3dscene') }}
+    p.paragraph-text.has-text-grey.has-text-justified.b-2(v-if="model==='perception/tuto/3d.glb'" v-html="$t('perc-tut-3d')")
     .level
       img.size-tuto-img(:src="src_img_pitch")
       #threecontainer.size-threejs
@@ -45,6 +46,7 @@ export default {
   data () {
     return {
       camera: null,
+      userinputs: [],
       scene: null,
       renderer: null,
       mesh: null,
@@ -57,7 +59,28 @@ export default {
   },
   methods: {
     nextquestion(){
-      this.$emit('nextlod')
+      this.$emit('nextlod',this.userinputs)
+    },
+    update(){
+      document.addEventListener( 'keydown', (e)=>{
+        switch (e.keyCode) {
+          case 37:
+            this.mesh.rotation.y -= 0.1;
+          break;
+          case 38:
+
+            this.mesh.rotation.x -= 0.1;
+            if(this.mesh.rotation.x < 0){this.mesh.rotation.x = 0}
+          break;
+          case 39:
+            this.mesh.rotation.y += 0.1;
+          break;
+          case 40:
+            this.mesh.rotation.x += 0.1;
+            if(this.mesh.rotation.x > 0.78){this.mesh.rotation.x = 0.78}
+          break;
+        }   
+      });
     },
     init() {
       let container = document.getElementById('threecontainer');
@@ -72,6 +95,10 @@ export default {
       this.renderer = new THREE.WebGLRenderer({antialias: true});
       this.renderer.setSize(this.height_container, this.width_container);
       container.appendChild(this.renderer.domElement);
+
+      this.renderer.gammaOutput = true;
+      this.renderer.gammaFactor = 2.2; 
+      this.renderer.physicallyCorrectLights=true;
 
       let materialArray = [];
       let texture_ft = new THREE.TextureLoader().load('perception/textures/sky.png');
@@ -96,16 +123,18 @@ export default {
       let skybox = new THREE.Mesh( skyboxGeo, materialArray );
       this.scene.add( skybox );
  
-      let directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+      let directionalLight = new THREE.DirectionalLight( 0xffffff, 0.75 );
       this.scene.add( directionalLight );
-      let hemisLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 ); 
+      let hemisLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.75 ); 
       this.scene.add( hemisLight );
+      var ambientlight = new THREE.AmbientLight( 0x404040 ); // soft white light
+      this.scene.add( ambientlight );
 
       let skyBoxGeometry = new THREE.CubeGeometry( 10000, 10000, 10000 );
       let skyBoxMaterial = new THREE.MeshBasicMaterial( { color: 0x9999ff, side: THREE.BackSide } );
       let skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
       this.scene.add(skyBox);
-      this.scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );      
+      //this.scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 );      
 
       this.addGltftoScene();
     },
@@ -113,22 +142,45 @@ export default {
       requestAnimationFrame( this.animate );
       this.render();		
     },
-    update() {
-      document.addEventListener( 'keydown', (e)=>{
+    sniffer() {
+      this.camera.updateMatrixWorld();
+      document.addEventListener( 'keyup', (e)=>{
         switch (e.keyCode) {
           case 37:
-            this.mesh.rotation.y -= 0.1;
+            this.userinputs.push({
+              "L":{
+                "x":this.mesh.rotation.x*180/Math.PI,
+                "y":this.mesh.rotation.y*180/Math.PI,
+                "z":this.mesh.rotation.z*180/Math.PI
+              }
+            })
           break;
           case 38:
-            this.mesh.rotation.x -= 0.1;
-            if(this.mesh.rotation.x < 0){this.mesh.rotation.x=0}
+            this.userinputs.push({
+              "U":{
+                "x":this.mesh.rotation.x*180/Math.PI,
+                "y":this.mesh.rotation.y*180/Math.PI,
+                "z":this.mesh.rotation.z*180/Math.PI
+              }
+            })
           break;
           case 39:
-            this.mesh.rotation.y += 0.1;
+            this.userinputs.push({
+              "R":{
+                "x":this.mesh.rotation.x*180/Math.PI,
+                "y":this.mesh.rotation.y*180/Math.PI,
+                "z":this.mesh.rotation.z*180/Math.PI
+              }
+            })
           break;
           case 40:
-            this.mesh.rotation.x += 0.1;
-            if(this.mesh.rotation.x > 0.5){this.mesh.rotation.x=0.5}
+            this.userinputs.push({
+              "D":{
+                "x":this.mesh.rotation.x*180/Math.PI,
+                "y":this.mesh.rotation.y*180/Math.PI,
+                "z":this.mesh.rotation.z*180/Math.PI
+              }
+            })
           break;
         }   
       });
@@ -173,6 +225,8 @@ export default {
     this.init();
     this.animate();
     this.update();
+    this.sniffer();
+    //init camera position to saved
   }
 }
 </script>

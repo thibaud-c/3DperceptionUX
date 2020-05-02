@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootMGR_Z
+  #rootSD_G_MZ
     #sub-cp(v-if="npa_cp != 2")
       p.sub-question.has-text-weight-semibold.has-text-centered ★ 
       p.sub-question.has-text-weight-semibold {{ npa_cp==0?$t('socio-gr-questionCP'):$t('socio-gr-questionNPA') }}
@@ -48,7 +48,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'micro-gr-zip',
+  name: 'sd-grew-micro-zip',
   props: {
     npa_cp:Number
   },

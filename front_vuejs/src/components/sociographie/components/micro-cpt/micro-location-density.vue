@@ -22,13 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootMLO_D
+  #rootSD_L_MD
     // Density slider
     p.sub-question.has-text-weight-semibold.has-text-centered ★ 
     p.sub-question.has-text-weight-semibold {{ $t('socio-lo-densite') }}
     #sliderdensity(v-if="!refus") 
+      output.output-loc-density(for='sliderWithValue') {{ $t(density) }}
+      br
       span.slider-boundaries {{ $t('socio-lo-huntinghouse') }} ⊖
-      input#sliderValued.slider.slider-size(v-model='density' min='0' :max='10' value='5' step='1' type='range')
+      input#sliderValued.has-output.slider.slider-size(v-model='density' min='1' :max='10' value='5' step='1' type='range')
       span.slider-boundaries ⊕ {{ $t('socio-lo-citycenter') }}
     //refus
     label.checkbox.pl-2
@@ -42,7 +44,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'micro-lo-dense',
+  name: 'sd-location-micro-dens',
   data () {
     return {
       density:5,
@@ -68,4 +70,12 @@ export default {
 </script>
 
 <style>
+.output-loc-density{
+  font: 25px 'Arial Narrow', sans-serif !important;
+  padding: 5px 15px 5px 15px;
+  border-radius: 10px 20px 10px 20px;
+  font-weight: bold;
+  background-color: #696969;
+  color: white;
+}
 </style>

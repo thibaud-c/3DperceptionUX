@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootWelcome
+  #rootIC_W
     p.questiontitle.has-text-weight-semibold {{ $t('intro-we-bonjour') }}
     p.paragraph-text.has-text-grey.has-text-justified(v-html="$t('intro-we-bienvenue')")
     p.paragraph-text.has-text-grey.has-text-justified {{ $t('intro-we-etude') }}

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootMDP_R
+  #rootSD_P_MR
     //Participation
     p.sub-question.has-text-weight-semibold.has-text-centered ★ 
     p.sub-question.has-text-weight-semibold(v-html="$t('socio-dp-role')")
@@ -41,7 +41,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'sd-pa-ro',
+  name: 'sd-participation-micro-role',
   data () {
     return {
       role_answers:["socio-dp-role-participant", "socio-dp-role-observateur", "socio-dp-role-animateur", "socio-dp-role-association", "socio-dp-role-expert", "socio-dp-role-élu", "socio-dp-role-scribe","reponse-autre"],

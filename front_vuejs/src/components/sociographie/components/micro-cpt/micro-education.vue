@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootMED
+  #rootSD_E_ME
     //education 
     p.questiontitle.has-text-weight-semibold {{ $t('socio-ed-question') }}
     .select.b-2(v-if="!refus" :class="valid?'valid':'is-danger'")
@@ -43,7 +43,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'micro-ed',
+  name: 'sd-education-micro-ed',
   data () {
     return {
       selected_education:null,

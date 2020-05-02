@@ -27,7 +27,7 @@ SOFTWARE.
     p.sub-question.has-text-weight-semibold {{ $t('perc-lod-leaflet') }}
     label.radio.pl-2(v-for="img in answer_order" :class="valid?'valid':'error'")
       input(v-model='solution' type='radio' :value='img' name='imgmap' @change="reseterror") 
-      img.size-whichleafletmap(:src="'perception/lod/'+conf+'/'+img+'.png'")
+      img.b-2.size-whichleafletmap(:src="'perception/'+exercice+'/'+img+'.png'")
     label.radio.pl-2(:class="valid?'valid':'error'")
       input(v-model='solution' type='radio' :value='answer_order.length' name='3dradio' @change="reseterror") 
       |   {{ $t('reponse-no-answer') }}
@@ -40,7 +40,7 @@ SOFTWARE.
 
 export default {
   name: 'lod-micro-ima-map',
-  props:['answer_order','conf'],
+  props:['answer_order','exercice'],
   data () {
     return {
         solution:null,
@@ -66,10 +66,6 @@ export default {
       }
       return true;
     },
-  },
-    mounted() {
-    console.log(this.answer_order)
-    console.log(this.conf)
   }
 }
 </script>

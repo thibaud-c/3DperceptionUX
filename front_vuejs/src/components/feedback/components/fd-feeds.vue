@@ -51,7 +51,6 @@ export default {
   },
   methods: {
     nextquestion(data){
-      console.log(data)
       // save location and add step if needed
       if(this.xp_step==0){
         this.json_answer["smile"] = data;

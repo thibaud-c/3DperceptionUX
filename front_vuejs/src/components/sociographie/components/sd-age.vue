@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootAge
+  #rootSD_A
     //question
     p.questiontitle.has-text-weight-semibold {{ $t("socio-ag-question") }}
     //select age

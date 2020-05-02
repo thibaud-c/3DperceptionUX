@@ -24,18 +24,19 @@ SOFTWARE.
 <template lang="pug">
   #leafletcontainer
     p.sub-question.has-text-weight-semibold.has-text-centered ★ 
-    p.sub-question.has-text-weight-semibold {{ $t('perc-lod-height') }}
-    .size-leaflet.b-2
-      l-map(ref="map" :zoom='zoom' :center='center')
+    p.sub-question.has-text-weight-semibold(v-html="$t('perc-lod-height')")
+    .b-2.size-leaflet
+      l-map(ref="map" :zoom='zoom' :center='center' :crs="crs")
         l-geo-json(:geojson='geojson' :options-style='styleFunction' @click="selectObject")
-    label.checkbox.pl-2(:class="valid?'valid':'error'")
-      input(v-model='noAnswer' type='checkbox' :value='-0' name='3dradio' @change="reseterror") 
-      |   {{ $t('reponse-no-answer') }}
+    label.radio.pl-2(v-for="ot,id in otherchoices" :class="valid?'valid':'error'")
+      input(v-model='other' type='radio' :value='id' name='leafletradio' @change="reseterror") 
+      |    {{ $t(ot) }}
     #sub-btn.mb-2
       //button.button.is-text(@click="") {{ $t("btn-previous") }}
       button.button.is-primary(@click="nextquestion") {{ $t("btn-valider") }}
 </template>
 <script>
+import { CRS } from "leaflet";
 import { LMap, LTileLayer, LGeoJson } from 'vue2-leaflet';
   
 export default {
@@ -49,9 +50,12 @@ export default {
   props:['footprint','center','zoom'],
   data () {
     return {
+      crs: CRS.EPSG4326,
+      otherchoices:['reponse-no-answer','perc-lod-height-sameheight'],
       geojson: null,
       building_answered:null,
-      noAnswer:false,
+      click_coordinate:null,
+      other:null,
       valid:true,
       color_unselected:"#606060",
       color_selected:"#fdbe02"
@@ -61,12 +65,15 @@ export default {
     nextquestion(){
       //validate
       if(!this.validate()){ return; }
-      if(this.noAnswer){this.building_answered=-0}
-      this.$emit('nextlod',this.building_answered)
+      if(this.other!==null){
+        this.building_answered=this.other;
+        this.click_coordinate =null;
+      }
+      this.$emit('nextlod',[this.building_answered,this.click_coordinate])
     },
     validate(){
       //if checked
-      if(this.building_answered===null && this.noAnswer==false){
+      if(this.building_answered===null && this.other===null){
         this.valid = false;
         return false;
       }
@@ -74,7 +81,7 @@ export default {
     },
     reseterror(){
       this.valid=true;
-      //lock selections
+      //Desactivate selections
       this.color_selected="#606060"
       // look for building selected and style it in grey
       this.$refs.map.mapObject.eachLayer(layer =>{
@@ -87,7 +94,9 @@ export default {
         }
       })
       //reactivate selection
-      if(!this.noAnswer){this.color_selected="#fdbe02"}
+      this.color_selected="#fdbe02"
+      this.building_answered = null;
+      this.click_coordinate = null;
     },
     desactivateControls(){
       //get map object and desactivate controls
@@ -104,6 +113,8 @@ export default {
     selectObject(e){
       //update the answer 
       this.building_answered = e.layer.feature.properties.osm_id;
+      this.click_coordinate = e.latlng;
+      this.other = null;
       e.target.eachLayer(layer => {
           layer.setStyle({
             opacity: 1,
@@ -144,12 +155,4 @@ export default {
 </script>
 
 <style>
-.size-leaflet{
-  height:450px;
-  width:450px;
-  margin:auto;
-}
-.leaflet-container {
-    background-color:rgba(255,0,0,0.0);
-}
 </style>

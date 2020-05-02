@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootWelcomeMemory
+  #rootAP_I
     p.questiontitle.has-text-weight-semibold {{ $t('perc-in-title') }}
     p.paragraph-text.has-text-grey.has-text-justified(v-html="$t('perc-in-consigne')")
     button.button.is-primary.mb-2(@click='addStep') {{ $t('btn-start') }}

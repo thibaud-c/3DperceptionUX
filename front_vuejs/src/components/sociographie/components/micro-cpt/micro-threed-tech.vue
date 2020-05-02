@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootM3D_T
+  #rootSD_3_3T
     //TECH
     p.sub-question.has-text-weight-semibold.has-text-centered ★ 
     p.sub-question.has-text-weight-semibold(v-html="$t('socio-3d-questionTech')")
@@ -41,7 +41,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'micro-threed-tech',
+  name: 'sd-treed-micro-tech',
   data () {
     return {
       checkedtech:[],

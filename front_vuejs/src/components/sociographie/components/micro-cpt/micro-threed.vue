@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootM3D
+  #rootSD_3_3
     // TreeD
     p.questiontitle.has-text-weight-semibold {{ $t('socio-3d-question') }}
     #3d(v-if="!refus")      
@@ -42,7 +42,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'micro-threed',
+  name: 'sd-treed-micro-3',
   data () {
     return {
       frequecy3d:2,

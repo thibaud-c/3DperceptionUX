@@ -24,6 +24,7 @@ SOFTWARE.
 <template lang="pug">
   #rootStart
     p.questiontitle.has-text-weight-semibold {{ $t('perc-lod-ready') }}
+    p.paragraph-text.has-text-grey.has-text-justified.b-2(v-html="$t('perc-lod-time')")
     #sub-btn.mb-2
       //button.button.is-text(@click="") {{ $t("btn-previous") }}
       button.button.is-primary(@click="nextquestion") {{ $t("btn-valider") }}

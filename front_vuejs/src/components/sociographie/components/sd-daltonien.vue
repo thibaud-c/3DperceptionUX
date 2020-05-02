@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootDaltonien
+  #rootSD_D
     //daltonien 
     p.questiontitle.has-text-weight-semibold {{ $t('socio-da-question') }}
     dalt(:image="images[stepDalt]" :answer="answers[stepDalt]" @nextdaltonism="nextdalt")

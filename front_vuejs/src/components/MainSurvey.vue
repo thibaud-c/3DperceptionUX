@@ -23,7 +23,6 @@ SOFTWARE.
 */
 <template lang="pug">
   #Main
-    span.Maintitle.has-text-weight-bold {{ $t('main-title') }}
     stepper(:steps.sync="step")
     .stage-size
       introWelcome(v-if="step==0" @nextstage="addAstep")
@@ -54,8 +53,8 @@ export default {
   },
   data () {
     return {
-      id_poste:null,
-      user_config:null,
+      id_poste:"",
+      user_config:{},
       step:0,
     }
   },
@@ -102,7 +101,7 @@ export default {
       }
     },
     async savedata(id,data) {
-      console.log("dd:",data)
+      console.log("saved:",data)
       // Get config from back end
       let path = GConfig.URL_BACKEND + GConfig.URL_SETANSWER + id;
       try{

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-    #rootMGR
+    #rootSD_G_MG
       // country
       p.questiontitle.has-text-weight-semibold {{ $t('socio-gr-question') }}
       label.radio.pl-2(v-for="gr,id in grews" :class="valid?'valid':'error'")
@@ -35,7 +35,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'micro-grew',
+  name: 'sd-grew-micro-gr',
   data () {
     return {
       grew:null,

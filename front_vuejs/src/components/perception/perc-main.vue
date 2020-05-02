@@ -22,16 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootPerception
+  #rootAP
     instruction(v-if="question==0" @nextpersstep="addStep")
-    lod(v-if="question==1" :models="config['lod']" :answers="config['answer']" @nextpersstep="addStep")
-    //exo2(:class="question==this.randomization_detail[1]?'':'is-hidden'" @nextpersstep="addStep")
-
+    tuto(v-if="question==1" :models="config['lod']" :answers="config['answer']" @nextpersstep="addStep")
+    letsgo(v-if="question==2" @nextpersstep="addStep")
+    aplod(v-if="question==3" :models="config['lod']" :answers="config['answer']" @nextpersstep="addStep")
+    apstyle(v-if="question==4" :models="config['style']" :answers="config['answer']" @nextpersstep="addStep")
 </template>
 
 <script>
 import instruction from './components/ap-instruction.vue'
-import lod from './components/ap-lod.vue'
+import letsgo from './components/ap-letsgo.vue'
+import tuto from './components/ap-tutorial.vue'
+import aplod from './components/ap-lod.vue'
+import apstyle from './components/ap-style.vue'
 
 
 export default {
@@ -40,7 +44,10 @@ export default {
   components : { 
     // liste des composants utilisés dans la div principale
     instruction,
-    lod
+    letsgo,
+    tuto,
+    aplod,
+    apstyle
   },
   data () {
     return {
@@ -54,7 +61,7 @@ export default {
         this.json_answer.push(answer);
       }
       this.question++;
-      if(this.question>1){
+      if(this.question>4){
         this.$emit('nextstage',this.obj_affectation(this.json_answer));
       }
     },
@@ -70,4 +77,17 @@ export default {
 </script>
 
 <style>
+.size-whichleafletmap{
+  height:200px;
+  width:300px;
+  margin:auto;
+}
+.size-leaflet{
+  height:500px !important;
+  width:550px !important;
+  margin:auto;
+}
+.leaflet-container {
+    background-color:rgba(255,0,0,0.0);
+}
 </style>

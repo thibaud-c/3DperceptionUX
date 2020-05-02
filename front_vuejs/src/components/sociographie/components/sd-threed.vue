@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #root3D
+  #rootSD_3
     // TreeD
     treed(v-if="th_step==0" @nextthreed="nextquestion")
     treed_tech(v-if="th_step==1" @nextthreed="nextquestion")
@@ -49,7 +49,6 @@ SOFTWARE.
     },
     methods: {
       nextquestion(data){
-        console.log(data)
         // save Threed and add step if needed
         if(this.th_step==0){
           this.json_answer["frequency_3d"] = data[0];

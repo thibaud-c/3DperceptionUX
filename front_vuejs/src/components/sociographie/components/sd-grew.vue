@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootGrew
+  #rootSD_G
     //grew
     gr(v-if="gr_step==0" @nextgrew="nextquestion")
     gr_zip(v-if="gr_step==1" @nextgrew="nextquestion" :npa_cp="json_answer['grew']")

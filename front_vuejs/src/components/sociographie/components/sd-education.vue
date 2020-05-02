@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootEducation
+  #rootSD_E
     //education 
     ed(v-if="ed_step==0" @nexteducation="nextquestion")
     ed_other(v-if="ed_step==1" @nexteducation="nextquestion")

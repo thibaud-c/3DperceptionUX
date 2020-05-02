@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootIntro
+  #rootIM
     welcome(v-if="step==0" @nextintrostep="addStep")
     consentement(v-if="step==1" @nextintrostep="addStep")
     plan(v-if="step==2" @nextintrostep="addStep")

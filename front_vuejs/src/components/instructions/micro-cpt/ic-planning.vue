@@ -22,13 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootPlanning
+  #rootIC_Pl
     p.questiontitle.has-text-weight-semibold {{ $t('intro-pl-concentement') }}
     //text agenda loop
     #agenda.planning-list(v-for="step in steps")
       p.paragraph-text.has-text-grey.has-text-justified •  {{ $t(step) }}
       br
-    .sub-btns(class='margin-bottom:2%;')
+    .sub-btns.mb-2
       button.button.is-primary.mb-2(@click='addStep') {{ $t('btn-next') }}
 </template>
 

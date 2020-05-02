@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootMDT_R_O
+  #rootSD_P_MR_O
     // Tech other
     p.sub-question.has-text-weight-semibold.has-text-centered ★ 
     p.sub-question.has-text-weight-semibold {{ $t('socio-dp-role-other') }}
@@ -40,7 +40,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'micro-pa-ro-o',
+  name: 'sd-participation-micro-role-o',
   data () {
     return {
       refus:false,

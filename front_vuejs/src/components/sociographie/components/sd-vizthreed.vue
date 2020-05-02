@@ -25,9 +25,6 @@ SOFTWARE.
   #rootVizthreeD
     //viz3d 
     p.questiontitle.has-text-weight-semibold {{ $t('socio-vd-question') }}
-    #projection
-      figure.image.image-3dviz-size
-        img(:src="srcplan2D")
     #sub-dalt    
       label.radio.pl-2(v-for="img,id in srcsolution" :class="valid?'valid':'error'")
         input(v-model='solution' type='radio' :value='img' name='3dradio' @change="reseterror") 
@@ -53,7 +50,6 @@ export default {
       // aimed answer -> 2
       if(!this.validate()){ return; }
       let id_sol = this.solution.split("/")[1][0];
-      console.log(id_sol)
       if(id_sol==this.srcsolution.length){ id_sol = -1; }
       let json_answer = {"exercice_3d":id_sol}
       this.$emit('nextsociostep',json_answer);
@@ -88,26 +84,21 @@ export default {
     }
   }, mounted () {
     // random shown solution
-    let randomized_answers = [1,2,3,4,5];
+    let randomized_answers = [0,1,2,3,4];
     randomized_answers = this.shuffle(randomized_answers);
     randomized_answers.forEach(sol => {
       this.srcsolution.push("tests/"+sol+".png");
     });
     //add i don't know 
-    this.srcsolution.push("tests/6.png");
+    this.srcsolution.push("tests/5.png");
   }
 }
 </script>
 
 <style>
-.image-3dviz-size{
-    height:125px;
-    width:300px;
-    margin:auto;
-}
 .image-sol-size{
-    height:65px;
-    width:75px;
+    height:125px;
+    width:150px;
     margin:auto;
 }
 </style>

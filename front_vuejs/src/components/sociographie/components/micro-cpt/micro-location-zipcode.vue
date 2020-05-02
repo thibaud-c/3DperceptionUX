@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootMLO_Z
+  #rootSD_L_MZ
     // Zip code / NPA
     p.sub-question.has-text-weight-semibold.has-text-centered ★ 
     p.sub-question.has-text-weight-semibold {{ npa_cp==0?$t('socio-lo-questionCP'):$t('socio-lo-questionNPA') }}
@@ -40,7 +40,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'micro-lo-zip',
+  name: 'sd-location-micro-zip',
   props: {
     npa_cp:Number
   },
@@ -50,9 +50,6 @@ export default {
       valid:true,
       refus:false
     }
-  },
-  mounted() {
-    console.log(this.npa_cp)
   },
   methods: {
     nextquestion(){

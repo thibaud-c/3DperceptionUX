@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootDalt
+  #rootSD_D_MD
     figure.image.image-dalt-size.b-2
       img(:src="image")
     #sub-dalt
@@ -38,7 +38,7 @@ SOFTWARE.
 
 <script>
 export default {
-  name: 'sd-spatial',
+  name: 'sd-daltonien-micro-dalt',
   props:['image'],
   data () {
     return {

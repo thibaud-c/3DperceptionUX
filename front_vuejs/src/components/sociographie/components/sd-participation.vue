@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
 <template lang="pug">
-  #rootDP
+  #rootSD_P
     //Participation
     part(v-if="pa_step==0" @nextparticipation="nextquestion")
     part_3d(v-if="pa_step==1" @nextparticipation="nextquestion")
