@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name: 'perc-front',
-    script: 'serve -s dist -l8080',
+    script: 'serve -s dist -l 8080',
 
     // Options reference: https://pm2.keymetrics.io/docs/usage/application-declaration/
     args: 'one two',
