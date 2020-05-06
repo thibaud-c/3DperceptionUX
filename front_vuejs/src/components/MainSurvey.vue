@@ -63,10 +63,14 @@ export default {
     async addAstep(json) {
       //Get user config from poste number && save poste config id 
       if(this.step == 0){
-        this.id_poste = json[0]["poste"];
+        this.id_poste = json[0][0]["poste"];
         this.user_config = await this.getConfig(this.id_poste);
         //check error -> stop script
         if(!this.user_config){return}
+        if(json[0][1]){
+          this.step+=2;
+          return
+        }
         this.step++;
         return;
       }

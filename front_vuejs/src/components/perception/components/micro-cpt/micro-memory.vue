@@ -71,12 +71,12 @@ export default {
 <style>
 .mem-image{
     height:400px;
-    width:400px;
+    width:575px;
     margin:auto;
 }
 .mem-image-sol{
-    height:50px;
-    width:50px;
+    height:100px;
+    width:144px;
     margin:auto;
 }
 </style>

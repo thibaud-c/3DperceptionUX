@@ -28,8 +28,12 @@ SOFTWARE.
     .control.poste-20
       input.input.mtb-2(type='text' v-model='place' :placeholder="$t('intro-po-holder')" :class="valid?'':'is-danger'" @change="reseterror")
     .sub-btns.mb-2
-      //button.button.is-text(@click='') {{ $t('btn-previous') }}
+      label.checkbox.b-2
+        input(v-model="isjump" name="sociocheck" type='checkbox') 
+        |     {{ $t('btn-jump') }}
+      br
       button.button.is-success(@click='nextquestion') {{ $t('btn-valider') }}
+      br
 </template>
 
 <script>
@@ -39,6 +43,7 @@ export default {
     return {
       place:"",
       valid:true,
+      isjump:false
     }
   },
   methods: {
@@ -47,7 +52,8 @@ export default {
       if(!this.validate()){ return; }
       let json_answer = {"poste":this.place}
       //save and pass next step
-      this.$emit('nextintrostep', json_answer);
+      
+      this.$emit('nextintrostep', [json_answer,this.isjump]);
     },
     validate(){
       let er = /^-?[0-9]+$/;

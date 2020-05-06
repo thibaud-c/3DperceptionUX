@@ -98,7 +98,7 @@
     "socio-vd-question": "Quelle construction est-elle différente des autres ?",
 
     "perc-in-title":"Première activité : Le memory des maquettes 3D",
-    "perc-in-consigne": "Des maquettes 3D vont vous être montrées. Prenez le temps que vous voulez pour retenir un maximum d'éléments (un détail particulier, la hauteur des bâtiments, les angles de vue, leurs projections en 2D, etc.).<br>Vous pouvez faire pivoter la scène avec les touches du clavier: [<b>haut, bas</b>] -> rotation verticale /  [<b>droite, gauche</b>] -> rotation horizontale.<br>Une fois que vous pensez avoir retenu tous les détails, des questions vont vous être posez sur ces maquettes 3D.<br><br>Il n'y a pas de mauvaise réponse. La bonne réponse est celle que vous me donnez.<br><br><b>Attention vous ne pouvez voir la scène 3D qu'une seule fois !</b>",
+    "perc-in-consigne": "Des maquettes 3D vont vous être montrées. Prenez le temps que vous voulez pour retenir un maximum d'éléments (un détail particulier, la hauteur des bâtiments, les angles de vue, leurs projections en 2D, etc.).<br>Vous pouvez faire pivoter la scène avec les touches du clavier: [<b>haut, bas</b>] -> rotation verticale /  [<b>droite, gauche</b>] -> rotation horizontale.<br>Une fois que vous pensez avoir retenu tous les détails, des questions vont vous être posez sur ces maquettes 3D.<br><br>Toutes vos réponses comptent, bonnes ou mauvaises, elles sont toutes autant instructives et importantes pour les résultats de cette étude.<br><br><b>Attention vous ne pouvez voir la scène 3D qu'une seule fois !</b>",
     "perc-tut-title":"Tutoriel",
     "perc-tut-consigne":"C'est le moment de vous entrainer !<br>La prochaine scène 3D et ses questions ne compteront pas dans les résultats de l'étude. Le but est de vous familiarisez avec les tâches que je vais vous demander par la suite.<br><br><b>Attention la scène que vous allez voir est très simplifiée et les questions ne reflètent pas l'ensemble de celles qui vont vous être posées.</b>",
     "perc-tut-3d": "Touches du clavier haut, bas gauche et droite pour manipuler la scène.<br>J'ai volontairement bloquer l'angle de vue vertical à un maximum de 45°. Cela est pour que vous visualisiez la scène seulement en 3D. Cependant, vous pouvez tourner autour autant que vous voulez (•‿•).",
@@ -161,6 +161,7 @@
     "reponse-forget": "Je ne m'en souviens pas",
     "reponse-refus": "Je ne souhaite pas répondre",
     "holder-precision": "Précisez...",
+    "btn-jump":"Passer la sociodémographie...",
 
     "Error-backend": "Malheureusement, un petit problème technique c'est produit :). Pouvez-vous appeler la personne responsable de la session, s'il vous plait ? "  
 }

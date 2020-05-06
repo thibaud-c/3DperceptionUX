@@ -78,8 +78,8 @@ export default {
 
 <style>
 .size-whichleafletmap{
-  height:200px;
-  width:300px;
+  height:250px;
+  width:360px;
   margin:auto;
 }
 .size-leaflet{

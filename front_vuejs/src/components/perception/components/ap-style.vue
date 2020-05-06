@@ -23,14 +23,14 @@ SOFTWARE.
 -->
 <template lang="pug">
   #rootEx1
-    start(v-if="c1.includes(lodstep)" @nextlod="addStep")
-    three(v-if="c2.includes(lodstep)" :model="'perception/style/'+models[mod]+'/3d.glb'" :view="views_config[models[mod]]" @nextlod="addStep")
-    nbbuildings(v-if="bonusnb.includes(lodstep)" :conf="models" @nextlod="addStep")    
-    mapchoice(v-if="q1.includes(lodstep)" :exercice="'style/'+models[mod]" :answer_order='answers' @nextlod="addStep")
-    memory(v-if="q2.includes(lodstep)" :exercice="'style/'+models[mod]" :answer_order='answers' :map="map_selected" @nextlod="addStep")
-    leaflet(v-if="q3.includes(lodstep)" :footprint="'perception/style/'+models[mod]+'/'+map_selected+'.geojson'" :center="views_config[models[mod]]['center']" :zoom="views_config[models[mod]]['zoom']" @nextlod="addStep")
-    lowerbati(v-if="q4.includes(lodstep)" :footprint="'perception/style/'+models[mod]+'/'+map_selected+'.geojson'" :center="views_config[models[mod]]['center']" :zoom="views_config[models[mod]]['zoom']" @nextlod="addStep")
-    densitycomparison(v-if="lodstep==24" context="style" :conf="models" :available_answers="models.length" @nextlod="addStep")
+    start(v-if="c1.includes(stylestep)" @nextlod="addStep")
+    three(v-if="c2.includes(stylestep)" :model="'perception/style/'+models[mod]+'/3d.glb'" :view="views_config[models[mod]]" @nextlod="addStep")
+    nbbuildings(v-if="bonusnb.includes(stylestep)" :conf="models" @nextlod="addStep")    
+    mapchoice(v-if="q1.includes(stylestep)" :exercice="'style/'+models[mod]" :answer_order='answers' @nextlod="addStep")
+    memory(v-if="q2.includes(stylestep)" :exercice="'style/'+models[mod]" :answer_order='answers' :map="map_selected" @nextlod="addStep")
+    leaflet(v-if="q3.includes(stylestep)" :footprint="'perception/style/'+models[mod]+'/'+map_selected+'.geojson'" :center="views_config[models[mod]]['center']" :zoom="views_config[models[mod]]['zoom']" @nextlod="addStep")
+    lowerbati(v-if="q4.includes(stylestep)" :footprint="'perception/style/'+models[mod]+'/'+map_selected+'.geojson'" :center="views_config[models[mod]]['center']" :zoom="views_config[models[mod]]['zoom']" @nextlod="addStep")
+    densitycomparison(v-if="stylestep==24" context="style" :conf="models" :available_answers="models.length" @nextlod="addStep")
 </template>
 
 <script>
@@ -61,7 +61,7 @@ export default {
   },
   data () {
     return {
-      lodstep:0,
+      stylestep:0,
       mod:0,
       views_config:"",
       map_selected:null,
@@ -73,7 +73,7 @@ export default {
       q2:[3,9,15,21],
       q3:[4,10,16,22],
       q4:[5,11,17,23],
-      bonusnb:[102,108,114,220],
+      bonusnb:[102,108,114,120],
       time3d:null
     }
 
@@ -81,16 +81,17 @@ export default {
   methods:{
     //next map
     addStep(data){
+      console.log(this.stylestep)
       /** Timer **/
-      if(this.c1.includes(this.lodstep)){
+      if(this.c1.includes(this.stylestep)){
         //start timer
         this.time3d = new Date();
-        this.lodstep++;
+        this.stylestep++;
         //change model
-        if(this.lodstep>1){this.mod++}
+        if(this.stylestep>1){this.mod++}
         return;
       }
-      if(this.c2.includes(this.lodstep)){
+      if(this.c2.includes(this.stylestep)){
         //stop timer
         let difftime = new Date();
         var dif = difftime.getTime() - this.time3d.getTime();
@@ -98,42 +99,42 @@ export default {
         this.json_answer["E"+this.models[this.mod]+"Inputs"] = data;
         if(this.models[this.mod]==3){
           //lod 2 -> ask nb of bulding
-          this.lodstep+=100;
+          this.stylestep+=100;
         }
-        this.lodstep++;
+        this.stylestep++;
         return;
       }
 
       /** Step handling **/
 
       //MAP
-      if(this.q1.includes(this.lodstep)){
+      if(this.q1.includes(this.stylestep)){
         this.json_answer["E"+this.models[this.mod]+"Q0"] = parseInt(data[0]);
         this.map_selected = data[0];
         //no map selected -> get the good expected answer
         if(!data[1]){this.map_selected=this.expected_answers[this.models[[this.mod]]]}
         
-        this.lodstep++;
+        this.stylestep++;
         return;
       }
 
       //HEIGHT
-      if(this.q3.includes(this.lodstep)){
+      if(this.q3.includes(this.stylestep)){
         this.json_answer["E"+this.models[this.mod]+"Q1"] = parseInt(data[0]);
         this.json_answer["E"+this.models[this.mod]+"Q1C"] = data[1];
-        this.lodstep++;
+        this.stylestep++;
         return;
       }
 
       //MEMORY
-      if(this.q2.includes(this.lodstep)){
+      if(this.q2.includes(this.stylestep)){
         this.json_answer["E"+this.models[this.mod]+"Q3"] = parseInt(data);
-        this.lodstep++;
+        this.stylestep++;
         return;
       }
 
       //VIEWS
-      if(this.q4.includes(this.lodstep)){
+      if(this.q4.includes(this.stylestep)){
         //TODO C
         let arrBuilding = [];
         let arrCoord = [];
@@ -144,19 +145,19 @@ export default {
         this.json_answer["E"+this.models[this.mod]+"Q2"] = arrBuilding;
         this.json_answer["E"+this.models[this.mod]+"Q2C"] = arrCoord;
         //change lod
-        this.lodstep++;
+        this.stylestep++;
         return;
       }
 
-      if(this.bonusnb.includes(this.lodstep)){
+      if(this.bonusnb.includes(this.stylestep)){
         this.json_answer["E3Q4"] = parseInt(data);
-        this.lodstep-=100;
+        this.stylestep-=100;
         return;
       }
 
-      if(this.lodstep==24){
+      if(this.stylestep==24){
         this.json_answer["E5Q5"] = data;
-        this.lodstep++;
+        this.stylestep++;
       }
 
       /** Next stage **/

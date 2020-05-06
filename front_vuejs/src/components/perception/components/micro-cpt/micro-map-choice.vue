@@ -28,6 +28,7 @@ SOFTWARE.
     label.radio.pl-2(v-for="img in answer_order" :class="valid?'valid':'error'")
       input(v-model='solution' type='radio' :value='img' name='imgmap' @change="reseterror") 
       img.b-2.size-whichleafletmap(:src="'perception/'+exercice+'/'+img+'.png'")
+    br
     label.radio.pl-2(:class="valid?'valid':'error'")
       input(v-model='solution' type='radio' :value='answer_order.length' name='3dradio' @change="reseterror") 
       |   {{ $t('reponse-no-answer') }}
