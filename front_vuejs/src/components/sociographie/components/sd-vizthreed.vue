@@ -23,82 +23,84 @@ SOFTWARE.
 -->
 <template lang="pug">
   #rootVizthreeD
+    // ERR Notif
+    .notification.errnotif-position.is-danger.is-light(v-if="!valid")
+      button.delete(@click="valid=true")
+      span {{err_message}}
     //viz3d 
     p.questiontitle.has-text-weight-semibold {{ $t('socio-vd-question') }}
+    img.bottle-size.b-2(:src="src_question")
+    br
+    br
     #sub-dalt    
       label.radio.pl-2(v-for="img,id in srcsolution" :class="valid?'valid':'error'")
         input(v-model='solution' type='radio' :value='img' name='3dradio' @change="reseterror") 
-        img.image-sol-size(:src="img")
+        img.bottle-sol-size(:src="img")
     #sub-btn.mb-2
-      //button.button.is-text(@click='') {{ $t('btn-previous') }}
-      button.button.is-primary(@click='nextquestion') {{ $t('btn-valider') }}
+      button.button.is-primary(ref="nextB" @click='nextquestion') {{ $t('btn-valider') }}
 </template>
 
 <script>
+import s_methods from '../../../js/shared_methods.js'
+
 export default {
   name: 'sd-vizthreed',
   data () {
     return {
-      srcplan2D:'tests/plan2D.png',
-      srcsolution:[],
+      src_question:'tests/bottle.png',
+      srcsolution:["tests/0.png","tests/1.png","tests/2.png","tests/3.png","tests/4.png"],
       solution:"",
+      err_message:"",
       valid:true
     }
   },
   methods: {
+    /**
+     * handle the next step process
+     */
     nextquestion(){
-      // aimed answer -> 2
+      // validation
       if(!this.validate()){ return; }
-      let id_sol = this.solution.split("/")[1][0];
-      if(id_sol==this.srcsolution.length){ id_sol = -1; }
-      let json_answer = {"exercice_3d":id_sol}
+      let id_sol = parseInt(this.solution.split("/")[1][0]);
+      let json_answer = {"exercice_spatial":id_sol}
       this.$emit('nextsociostep',json_answer);
+      //remove button listerner
+      s_methods.remove_entertonext()
     },
+    /**
+     * Validation ok the solution -> need one selected
+     */
     validate(){
       if(this.solution===""){
         this.valid=false;
+        this.err_message=this.$i18n.t('err_no_selection');
         return false;
       }
       return true;
     },
+    /**
+     * Reset error
+     */
     reseterror(){
       this.valid=true;
     },
-    //Fisher-Yates algorithm
-    shuffle(array) {
-      var currentIndex = array.length, temporaryValue, randomIndex;
-
-      // While there remain elements to shuffle...
-      while (0 !== currentIndex) {
-
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-      }
-      return array;
-    }
-  }, mounted () {
-    // random shown solution
-    let randomized_answers = [0,1,2,3,4];
-    randomized_answers = this.shuffle(randomized_answers);
-    randomized_answers.forEach(sol => {
-      this.srcsolution.push("tests/"+sol+".png");
-    });
-    //add i don't know 
-    this.srcsolution.push("tests/5.png");
+  },
+  mounted(){
+    //add next with enter
+    s_methods.entertonext(this.$refs.nextB)
   }
 }
 </script>
 
 <style>
-.image-sol-size{
-    height:125px;
-    width:150px;
+.bottle-size{
+    height:20%;
+    width:10%;
+    margin:auto;
+}
+.bottle-sol-size{
+    height:70%;
+    width:70%;
     margin:auto;
 }
 </style>

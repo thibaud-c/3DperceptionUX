@@ -40,15 +40,18 @@ export default {
   },
   data () {
     return {
-      em_step:0,
-      json_answer:{}
+      em_step:0
     }
   },
   methods: {
+    //next question
     nextquestion(data){
-      // save location and add step if needed
+
+      /** Step handling **/
+
       if(this.em_step==0){
-        this.json_answer["followup"] = data[0];
+        // Shape answer and send to db
+        this.send("followup",data[0])
         if(!data[1]){
           this.em_step++;
           return;
@@ -57,11 +60,19 @@ export default {
         this.em_step+=2;
       }
       if(this.em_step==1){
-        this.json_answer["email"] = data;
+        // Shape answer and send to db
+        this.send("email",data)
       }
       //save and pass next question
-      this.$emit('nextfeedstep',this.json_answer);
+      this.$emit('nextfeedstep');
     },
+      /**
+     * Send data to db hadler
+     */
+    send(question_name,data_to_save){
+      let json_answer = { [question_name] : data_to_save }
+      this.$emit('save_db',json_answer);
+    }
   }
 }
 </script>

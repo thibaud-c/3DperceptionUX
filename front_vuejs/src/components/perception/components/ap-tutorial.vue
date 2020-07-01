@@ -23,50 +23,80 @@ SOFTWARE.
 -->
 <template lang="pug">
   #rootAP_T
-    tutoExp(v-if="tutostep==0" @nextlod="addStep")
-    start(v-if="tutostep==1" @nextlod="addStep")
-    three(v-if="tutostep==2" model="perception/tuto/3d.glb" :view="views_config['tuto']" @nextlod="addStep")
-    mapchoice(v-if="tutostep==3" exercice="tuto/" :answer_order='["0","1","2"]' @nextlod="addStep")
-    leaflet(v-if="tutostep==4" :footprint="'perception/tuto/0.geojson'" :center="views_config['tuto']['center']" :zoom="views_config['tuto']['zoom']" @nextlod="addStep")
+    tutoExp(v-if="tutostep==0" :user_name="user_name" @nextlod="addStep")
+    mapchoice(v-if="tutostep==1" path="tuto" :view="views_config['tuto']" :answer='[0,1,2]' :view_xy="angles" @nextlod="addStep")
+    tall(v-if="tutostep==2" path="tuto" :view="views_config['tuto']" :view_xy="angles" footprint="tuto/0" :l_data="views_config['tuto']['leaflet']" @nextlod="addStep")
+    views(v-if="tutostep==3" path="tuto" :view="views_config['tuto']" :view_xy="angles" @nextlod="addStep")
+    results(v-if="tutostep==4" :result="checkresult()" @nextlod="addStep")
 </template>
 
 <script>
 import tutoExp from './micro-cpt/micro-explanation.vue'
-import start from './micro-cpt/micro-start.vue'
-import three from './micro-cpt/micro-three.vue'
-import mapchoice from './micro-cpt/micro-map-choice.vue'
-import leaflet from './micro-cpt/micro-leaflet.vue'
+import mapchoice from './micro-cpt/micro-per-map-choice.vue'
+import tall from './micro-cpt/micro-per-tallest.vue'
+import views from './micro-cpt/micro-per-view.vue'
+import results from './micro-cpt/micro-tuto-results.vue'
 
 import views_config from './../../../assets/views.json'
 
 export default {
   name: 'ap-tutorial',
+  props:['user_name'],
   components : { 
     // liste des composants utilisés dans la div principale
     tutoExp,
-    start,
-    three,
     mapchoice,
-    leaflet,
+    tall,
+    views,
+    results
   },
   data () {
     return {
       tutostep:0,
+      expected_answers:[0,0,1],
+      answers:[],
+      angles:[],
+      diff:[],
+      start_time:null
     }
-
   },
   methods:{
     //next map
-    addStep(){
+    addStep(answer){
+      if (answer !== undefined) {
+        //save answers
+        this.answers.push(parseInt(answer['res']));
+      }
       this.tutostep++;
       if (this.tutostep>4){
+        // send time to db
+        let json_answer = {"tuto_time":(new Date()).getTime() - this.start_time.getTime()};
+        this.$emit('save_db',json_answer);
+        
         /** Next stage **/
-        this.$emit('nextpersstep');
+        this.$emit('nextpersstep');  
       }
+    },
+    /**
+     * Calculate the success rate of the user on the exercice
+     */
+    checkresult(){
+        // get difference with expected
+        this.answers.forEach( (element,i) => { 
+          this.diff[i] = this.expected_answers[i] == element
+        });
+        return Math.round(this.diff.filter( el => el ).length/this.diff.length*100)
+       
     }
   },
   mounted(){
+    // handle config for camera
     this.views_config = views_config;
+    // initiate time counter 
+    this.start_time = new Date();
+    // Create camera random rotation
+    this.angles = [Math.random() * 5 * Math.PI/180, Math.random() * 360 * Math.PI/180]
+
   }
 }
 </script>

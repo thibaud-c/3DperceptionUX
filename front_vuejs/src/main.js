@@ -35,6 +35,7 @@ import bulma from 'bulma'
 Vue.use(bulma)
 import 'bulma-slider/dist/js/bulma-slider.min.js';
 import 'bulma-slider/dist/css/bulma-slider.min.css';
+import '@creativebulma/bulma-divider/dist/bulma-divider.css';
 
 //icons fa
 import { library } from '@fortawesome/fontawesome-svg-core'

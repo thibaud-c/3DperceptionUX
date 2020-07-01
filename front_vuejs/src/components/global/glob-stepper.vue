@@ -39,10 +39,6 @@ SOFTWARE.
       li.steps-segment.has-gaps(:class="steps==3?'is-active':''")
         span.steps-marker
         .steps-content
-          p.heading {{ $t('main-creation') }}
-      li.steps-segment.has-gaps(:class="steps==4?'is-active':''")
-        span.steps-marker
-        .steps-content
           p.heading {{ $t('main-commentaire') }}
 </template>
 

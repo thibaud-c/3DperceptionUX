@@ -23,6 +23,11 @@ SOFTWARE.
 -->
 <template lang="pug">
   #rootMF_GXP
+    // ERR Notif
+    .notification.errnotif-position.is-danger.is-light(v-if="!valid")
+      button.delete(@click="valid=true")
+      span {{err_message}}
+    // TITLE
     p.questiontitle.has-text-weight-semibold {{ $t('feed-xp-question') }}
     label.radio.pl-2(v-for="img,id in smiles" :class="valid?'valid':'error'")
       input(v-model='feed' type='radio' :value='id' name='smileradio' @change="reseterror") 
@@ -31,11 +36,12 @@ SOFTWARE.
       input(v-model='feed' type='radio' :value='smiles.length' name='smileradio' @change="reseterror") 
       |   {{ $t('reponse-refus') }}
     #sub-btn.mb-2
-      //button.button.is-text(@click='') {{ $t('btn-previous') }}
-      button.button.is-primary(@click='nextquestion') {{ $t('btn-valider') }}
+      button.button.is-primary(ref="nextB" @click='nextquestion') {{ $t('btn-valider') }}
 </template>
 
 <script>
+import s_methods from '../../../../js/shared_methods.js'
+
 export default {
   name: 'micro-feeds-globxp',
   data () {
@@ -43,26 +49,43 @@ export default {
       feed:null,
       smiles:['--','-', '=', '+', '++'],
       valid:true,
+      err_message:"",
     }
   },
   methods: {
+    /**
+     * handle the next step process
+     */
     nextquestion(){
       //validate
       if(!this.validate()){ return; }
       //save and pass next question
       this.$emit('nextfeedxp',this.feed);
+      //remove button listerner
+      s_methods.remove_entertonext()
     },
+    /**
+     * Validation ok the solution -> need one selected
+     */
     validate(){
       //if checked
-      if(this.feed===null){
+      if(this.feed==null){
         this.valid = false;
+        this.err_message=this.$i18n.t('err_no_selection');
         return false;
       }
       return true;
     },
+    /**
+     * Reset error
+     */
     reseterror(){
       this.valid = true;
     }
+  },
+  mounted(){
+    //add next with enter
+    s_methods.entertonext(this.$refs.nextB)
   }
 }
 </script>

@@ -25,17 +25,24 @@ SOFTWARE.
   #rootAP_LG
     p.questiontitle.has-text-weight-semibold {{ $t('perc-atel-beginning') }}
     p.paragraph-text.has-text-grey.has-text-justified(v-html="$t('perc-atel-explanation')")
-    button.button.is-primary.mb-2(@click='addStep') {{ $t('btn-start') }}
+    button.button.is-primary.mb-2(ref="nextB" @click='addStep') {{ $t('btn-start') }}
 </template>
 
 <script>
+import s_methods from '../../../js/shared_methods.js'
 
 export default {
   name: 'ap-letsgo',
   methods: {
     addStep(){
-      this.$emit('nextpersstep')
+      this.$emit('nextpersstep');
+     //remove button listerner
+     s_methods.remove_entertonext();
     }
+  },
+  mounted(){
+    //add next with enter
+    s_methods.entertonext(this.$refs.nextB);
   }
 }
 </script>

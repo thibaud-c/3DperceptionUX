@@ -24,20 +24,28 @@ SOFTWARE.
 <template lang="pug">
   #rootAP_ME
     p.questiontitle.has-text-weight-semibold {{ $t('perc-tut-title') }}
-    p.paragraph-text.has-text-grey.has-text-justified(v-html="$t('perc-tut-consigne')")
+    p.paragraph-text.has-text-grey.has-text-justified(v-html="user_name + $t('perc-tut-consigne')")
     #sub-btn.mb-2
       //button.button.is-text(@click="") {{ $t("btn-previous") }}
-      button.button.is-primary(@click="nextquestion") {{ $t("btn-valider") }}
+      button.button.is-primary(ref="nextB" @click="nextquestion") {{ $t("btn-ready") }}
 </template>
 
 <script>
+import s_methods from '../../../../js/shared_methods.js'
 
 export default {
   name: 'ap-tutorial-micro-explanation',
+  props:['user_name'],
   methods: {
     nextquestion(){
       this.$emit('nextlod')
+      //remove button listerner
+      s_methods.remove_entertonext()
     }
+  },
+  mounted(){
+    //add next with enter
+    s_methods.entertonext(this.$refs.nextB)
   }
 }
 </script>

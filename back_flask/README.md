@@ -36,113 +36,51 @@ http://localhost:3030/api/v1/<user_id>
 
 CREATE TABLE public.perception_ux
 (
-    -- CONFIGS
-
-    id_poste integer NOT NULL,
-    config json NOT NULL,
-
-    -- SOCIADEMOGRAPHY
-
+    user_guid character varying(36) COLLATE pg_catalog."default",
+    start_at timestamp with time zone,
+    language integer,
+    version integer
+    scenes_order integer[],
+    answers_order integer[],
+    angles_order real[],
+    user_tech_config json,
     age integer,
-    genre integer,
+    gender integer,
     education integer,
-    education_other character varying(128) COLLATE pg_catalog."default",
-    location integer,
-    location_zipcode integer,
-    location_density integer,
-    grew integer,
-    grew_zipcode integer,
     grew_density integer,
     grew_country character varying(128) COLLATE pg_catalog."default",
+    location_density integer,
+    location_country character varying(128) COLLATE pg_catalog."default",
     frequency_3d integer,
-    technology_3d_other character varying(128) COLLATE pg_catalog."default",
-    participation integer,
-    participation_3d integer,
-    participation_role_other character varying(128) COLLATE pg_catalog."default",
-    participation_sujet integer,
-    participation_sujet_other character varying(128) COLLATE pg_catalog."default",
-    participation_number integer,
-    colorblind_rg integer,
-    colorblind_dc integer,
-    exercice_3d integer,
-    technology_3d integer[],
-    participation_role integer[],
-    colorblind_pt integer,
-
-    -- PERCEPTION
-
-    "E0Time" integer,
-    "E0Inputs" json,
-    "E0Q0" integer,
-    "E0Q1" integer,
-    "E0Q1C" json,
-    "E0Q2" integer[],
-    "E0Q2C" json,
-    "E0Q3" integer,
-
-    "E1Time" integer,
-    "E1Inputs" json,
-    "E1Q0" integer,
-    "E1Q1" integer,
-    "E1Q1C" json,
-    "E1Q2" integer[],
-    "E1Q2C" json,
-    "E1Q3" integer,
-    "E1Q4" integer,
-    "E1Q5" integer[],
-    
-    "E2Time" integer,
-    "E2Inputs" json,
-    "E2Q0" integer,
-    "E2Q1" integer,
-    "E2Q1C" json,
-    "E2Q2" integer[],
-    "E2Q2C" json,
-    "E2Q3" integer,
-
-    "E3Time" integer,
-    "E3Inputs" json,
-    "E3Q0" integer,
-    "E3Q1" integer,
-    "E3Q1C" json,
-    "E3Q2" integer[],
-    "E3Q2C" json,
-    "E3Q3" integer,
-    "E3Q4" integer,
-
-    "E4Time" integer,
-    "E4Inputs" json,
-    "E4Q0" integer,
-    "E4Q1" integer,
-    "E4Q1C" json,
-    "E4Q2" integer[],
-    "E4Q2C" json,
-    "E4Q3" integer,
-
-    "E5Time" integer,
-    "E5Inputs" json,
-    "E5Q0" integer,
-    "E5Q1" integer,
-    "E5Q1C" json,
-    "E5Q2" integer[],
-    "E5Q2C" json,
-    "E5Q3" integer,
-    "E5Q5" integer[],
-
-    --FEEDBACK
-    hard_scene integer,
-    easy_scene integer,
+    exercice_spatial integer,
+    tuto_time integer,
+    "E0Q0" json,
+    "E0Q1" json,
+    "E0Q2" json,
+    "E1Q0" json,
+    "E1Q1" json,
+    "E1Q2" json,
+    "E2Q0" json,
+    "E2Q1" json,
+    "E2Q2" json,
+    "E2Q3" json,
+    "E3Q0" json,
+    "E3Q1" json,
+    "E3Q2" json,
+    "E3Q3" json,
+    pref_hard integer,
+    pref_easy integer,
+    pref_memory integer,
+    pref_static integer,
+    estim_building integer,
     smile integer,
     difficulty integer,
-    opinion3dpart integer,
     comment character varying(1024) COLLATE pg_catalog."default",
     followup integer,
-    email character varying(256) COLLATE pg_catalog."default",
-    CONSTRAINT perception_ux_pkey PRIMARY KEY (id_poste)
+    email character varying(256) COLLATE pg_catalog."default"
+
 )
-WITH (
-    OIDS = FALSE
-)
+
 TABLESPACE pg_default;
 
 ALTER TABLE public.perception_ux

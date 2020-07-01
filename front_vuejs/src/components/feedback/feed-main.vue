@@ -23,54 +23,54 @@ SOFTWARE.
 -->
 <template lang="pug">
   #rootFeed
-    intro(v-if="step==0" @nextfeedstep="addStep")
-    easyviews(v-if="step==1" @nextfeedstep="addStep")
-    feedbacks(v-if="step==2" @nextfeedstep="addStep")
-    email(v-if="step==3" @nextfeedstep="addStep")
-    thankyou(v-if="step==4")
+    intro(v-if="step==0" :user_name="user_name" @nextfeedstep="addStep" @save_db="send_data")
+    buldingnb(v-if="step==1" @nextfeedstep="addStep" @save_db="send_data")
+    feedbacks(v-if="step==2"  @nextfeedstep="addStep" @save_db="send_data")
+    email(v-if="step==3" @nextfeedstep="addStep" @save_db="send_data")
+    thankyou(v-if="step==4" :results="results" @nextfeedstep="addStep" @save_db="send_data")
 </template>
 
 <script>
 import intro from './components/fd-introduction.vue'
-import easyviews from './components/fd-easyview.vue'
+import buldingnb from './components/micro-cpt/micro-nbbuildings.vue'
 import feedbacks from './components/fd-feeds.vue'
 import email from './components/fd-email.vue'
 import thankyou from './components/fd-thankyou.vue'
 
 export default {
   name: 'feedback',
+  props: ["user_name","results"],
   components : { 
     // liste des composants utilisés dans la div principale
     intro,
-    easyviews,
+    buldingnb,
     feedbacks,
     email,
-    thankyou
+    thankyou,
   },
   data () {
     return {
-      step:0,
-      json_answer:[]
+      step:0
     }
   },
   methods: {
-    //add the answer and launch next step
-    addStep(answer){
-      if (answer !== undefined) {
-        this.json_answer.push(answer);
-      }
+    /**
+     * step handler
+     */
+    addStep(){
       this.step++;
       if(this.step>3){
         //save database and pass next stage
-        this.$emit('nextstage',this.obj_affectation(this.json_answer));
+        this.$emit('nextstage');
       }
     },
-    obj_affectation(non_formated_arr){
-      let obj = {};
-      non_formated_arr.forEach(a => {
-        Object.assign(obj,a);
-      })
-      return obj;
+    /**
+     * Senda data to db via PUT
+     */
+    send_data(answer){
+      if (answer !== undefined) {
+        this.$emit('send_data_to_db',answer);
+      }
     }
   }
 }

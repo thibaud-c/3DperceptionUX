@@ -4,23 +4,30 @@ from ..models.UserModel import UserModel, UserSchema
 user_api = Blueprint('user_api', __name__)
 user_schema = UserSchema()
 
-### Get User config 
+### create user + config
 
-@user_api.route('/config/<int:user_id>', methods=['GET'])
-def get_userconfig(user_id):
+@user_api.route('/<user_id>', methods=['POST'])
+def create(user_id):
   """
-  Get a user config to order tasks
+  Create User Function
   """
-  user_config = UserModel.get_user_config(user_id)
-  if not user_config:
-    return custom_response({'error': 'config not found'}, 404)
-  
-  return custom_response(user_config, 200)
+  req_data = request.get_json()
+  isuser = UserModel.get_one_user(user_id)
+  #Check if user exist
+  if isuser:
+    return custom_response({'error': 'User already exist'}, 400)
+
+  req_data["user_guid"] = user_id
+
+  user = UserModel(req_data)
+  message = user.create_user()
+
+  return custom_response({"message" :message}, 201)
 
 
 ### Put data in user
 
-@user_api.route('/<int:user_id>', methods=['PUT'])
+@user_api.route('/<user_id>', methods=['PUT'])
 def update(user_id):
   """
   Update me
@@ -39,26 +46,22 @@ def update(user_id):
   return custom_response({"message" :message}, 200)  
 
 
-### create user + config
+# DELETE ?
 
-@user_api.route('/<int:user_id>', methods=['POST'])
-def create(user_id):
+### Get User config 
+
+@user_api.route('/config/<int:user_id>', methods=['GET'])
+def get_userconfig(user_id):
   """
-  Create User Function
+  Get a user config to order tasks
   """
-  req_data = request.get_json()
+  user_config = UserModel.get_user_config(user_id)
+  if not user_config:
+    return custom_response({'error': 'config not found'}, 404)
   
-  isuser = UserModel.get_one_user(user_id)
-  #Check if user exist
-  if isuser:
-    return custom_response({'error': 'User already exist'}, 400)
+  return custom_response(user_config, 200)
 
-  req_data["poste"] = user_id
 
-  user = UserModel(req_data)
-  message = user.save()
-
-  return custom_response({"message" :message}, 201)
 
 ### Delete user
 @user_api.route('/<int:user_id>', methods=['DELETE'])

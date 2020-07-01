@@ -23,47 +23,34 @@ SOFTWARE.
 -->
 <template lang="pug">
   #rootIC_C
-    p.questiontitle.has-text-weight-semibold {{ $t('intro-cc-concentement') }}
+    p.Maintitle.has-text-weight-semibold.b-2 {{ $t('intro-cc-ntmy') + '  ' + user_name }}
+    p.sub-question.has-text-weight-semibold(v-html="$t('intro-cc-concentement')")
     //text rules loop
     #rules(v-for="rule in consent_rules")
       p.paragraph-text.has-text-grey.has-text-justified •  {{ $t(rule) }}
-      br
-    br
-    //consent
-    label.checkbox.has-text-weight-semibold(:class="valid?'valid':'error'")
-      input(v-model="consent" name="conscheck" type='checkbox' @change="reseterror") 
-      |     {{ $t("intro-cc-declaration") }}
     .sub-btns.mb-2
-      button.button.is-primary.mb-2(@click='addStep') {{ $t('btn-valider') }}
+      button.button.is-primary.mb-2(ref="nextB" @click='addStep') {{ $t('intro-cc-declaration') }}
 </template>
 
 <script>
+import s_methods from '../../../js/shared_methods.js'
+
 export default {
   name: 'ic-consentment',
+  props:['user_name'],
   data () {
     return {
-      consent:false,
-      consent_rules:['intro-cc-volontariat','intro-cc-anonymat','intro-cc-film'],
-      valid:true
+      consent_rules:['intro-cc-volontariat','intro-cc-anonymat']
     }
   },
   methods: {
     addStep(){
-      //validate
-      if(!this.validate()){ return; }
       this.$emit('nextintrostep');
     },
-    validate(){
-      //checked
-      if(!this.consent){
-        this.valid = false;
-        return false;
-      }
-      return true;
-    },
-    reseterror(){
-      this.valid = true;
-    }
+  },
+  mounted(){
+    //add next with enter
+    s_methods.entertonext(this.$refs.nextB);
   }
 }
 </script>

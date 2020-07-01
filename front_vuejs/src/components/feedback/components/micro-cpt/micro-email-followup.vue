@@ -23,16 +23,22 @@ SOFTWARE.
 -->
 <template lang="pug">
     #rootMDE_FU
+      // ERR Notif
+      .notification.errnotif-position.is-danger.is-light(v-if="!valid")
+        button.delete(@click="valid=true")
+        span {{err_message}}
+      // TITLE
       p.questiontitle.has-text-weight-semibold {{ $t('feed-em-question') }}
       label.radio.pl-2(v-for="fu,id in followups" :class="valid?'valid':'error'")
           input(v-model='fup' type='radio' :value='id' name='fupradio' @change="reseterror") 
           |    {{ $t(fu) }}
       #sub-btn.mb-2
-        //button.button.is-text(@click='') {{ $t('btn-previous') }}
-        button.button.is-primary(@click='nextquestion') {{ $t('btn-valider') }}
+        button.button.is-primary(ref="nextB" @click='nextquestion') {{ $t('btn-valider') }}
 </template>
 
 <script>
+import s_methods from '../../../../js/shared_methods.js'
+
 export default {
   name: 'micro-fd-email-fu',
   data () {
@@ -40,9 +46,13 @@ export default {
       fup:null,
       followups:['feed-em-results','feed-em-surveys', 'feed-em-interviews', 'feed-em-no', 'reponse-refus'],
       valid:true,
+      err_message:"",
     }
   },
   methods: {
+    /**
+     * handle the next step process
+     */
     nextquestion(){
       //validate
       if(!this.validate()){ return; }
@@ -51,18 +61,31 @@ export default {
       if(this.fup<3){next=false}
       //save and pass next question
       this.$emit('nextfeedem',[this.fup,next]);
+      //remove button listerner
+      s_methods.remove_entertonext()
     },
+    /**
+     * Validation ok the solution -> need one selected
+     */
     validate(){
       //if checked
       if(this.fup===null){
         this.valid = false;
+        this.err_message=this.$i18n.t('err_no_selection');
         return false;
       }
       return true;
     },
+    /**
+     * Reset error
+     */
     reseterror(){
       this.valid = true;
     }
+  },
+  mounted(){
+    //add next with enter
+    s_methods.entertonext(this.$refs.nextB)
   }
 }
 </script>

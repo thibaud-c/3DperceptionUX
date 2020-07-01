@@ -24,25 +24,25 @@ SOFTWARE.
 <template lang="pug">
   #rootIM
     welcome(v-if="step==0" @nextintrostep="addStep")
-    consentement(v-if="step==1" @nextintrostep="addStep")
-    plan(v-if="step==2" @nextintrostep="addStep")
-    poste(v-if="step==3" @nextintrostep="addStep")
+    plan(v-if="step==1" @nextintrostep="addStep")
+    firstname(v-if="step==2" @nextintrostep="addStep")
+    consentement(v-if="step==3" :user_name='json_answer[0]["user_name"]' @nextintrostep="addStep")
 </template>
 
 <script>
 import welcome from './micro-cpt/ic-welcome.vue'
-import consentement from './micro-cpt/ic-consentement.vue'
 import plan from './micro-cpt/ic-planning.vue'
-import poste from './micro-cpt/ic-poste.vue'
+import firstname from './micro-cpt/ic-firstname.vue'
+import consentement from './micro-cpt/ic-consentement.vue'
 
 export default {
   name: 'introduction',
   components : { 
     // liste des composants utilisés dans la div principale
     welcome,
-    consentement,
     plan,
-    poste
+    firstname,
+    consentement
   },
   data () {
     return {
@@ -60,6 +60,7 @@ export default {
       if(this.step>3){
         //save database and pass next stage
         this.$emit('nextstage',this.json_answer);
+        this.step=0;
       }
     }
   }

@@ -30,7 +30,7 @@ class Testing(object):
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 
 app_config = {
-    'development': Development,
     'production': Production,
+    'development': Development,
     'testing': Testing
 }

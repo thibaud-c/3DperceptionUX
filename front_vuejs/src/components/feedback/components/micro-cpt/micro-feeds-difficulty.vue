@@ -23,32 +23,39 @@ SOFTWARE.
 -->
 <template lang="pug">
   #rootMF_DIF
-    // TreeD
+    // Global experiment Difficulty
     p.questiontitle.has-text-weight-semibold {{ $t('feed-di-question') }}
-    #3d(v-if="!refus")      
+    #3d(v-if="!refus")  
+      output.b-2.outputfreq(for='sliderWithValue') {{ $t(diffs[diff]) }}
+      br.b-2    
       span.slider-boundaries {{ $t('feed-di---') }} ⊖
-      input.slider(v-model='diff' min='0' max='6' value='3' step='1' type='range')
-      span.slider-boundaries ⊕ {{ $t('feed-di-++') }}
+      input.slider.slider-size(v-model='diff' min='0' max='6' value='3' step='1' type='range')
+      span.slider-boundaries ⊕ {{ $t('feed-di+++') }}
     //no answer
     label.checkbox
       input(v-model="refus" name="checkbox" type='checkbox' @change="isrefus") 
       |   {{ $t("reponse-refus") }}   
     #sub-btn.mb-2
-      //button.button.is-text(@click='') {{ $t('btn-previous') }}
-      button.button.is-primary(@click='nextquestion') {{ $t('btn-valider') }}
+      button.button.is-primary(ref="nextB" @click='nextquestion') {{ $t('btn-valider') }}
 </template>
 
 <script>
+import s_methods from '../../../../js/shared_methods.js'
+
 export default {
   name: 'micro-feeds-diff',
   data () {
     return {
       diff:3,
+      diffs:["feed-di---", "feed-di--", "feed-di-", "feed-di=", "feed-di+", "feed-di++", "feed-di+++"],
       refus:false,
       valid:true
     }
   },
   methods: {
+      /**
+     * Get answer and send to next
+     */
     nextquestion(){
       if(!this.validate()){ return; }
       if(this.refus){
@@ -56,16 +63,31 @@ export default {
         this.diff=7;
       }
       this.$emit('nextfeedxp',this.diff);
+      //remove button listerner
+      s_methods.remove_entertonext();
     },
+    /**
+     * Check if the answer is correct
+     */
     validate(){
       return true;
     },
+    /**
+     * Reset error handler
+     */
     razerror(){
       this.valid=true;
-    },    
+    },
+    /**
+     * Hide div if doesn't want to answer
+     */    
     isrefus(){
       this.diff=3;
     },
+  },
+  mounted(){
+    //add next with enter
+    s_methods.entertonext(this.$refs.nextB)
   }
 }
 </script>

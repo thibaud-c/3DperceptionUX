@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
 
+import logging
+
 from .config import app_config
 from .models import db
 
@@ -11,7 +13,9 @@ def create_app(env_name):
   """
   Create app
   """
-  
+  #init log
+  logging.basicConfig(filename='Flask.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
+
   # app initiliazation
   app = Flask(__name__)
   CORS(app)

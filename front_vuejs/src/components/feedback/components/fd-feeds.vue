@@ -25,14 +25,12 @@ SOFTWARE.
   #rootFeeds
     globxp(v-if="xp_step==0" @nextfeedxp="nextquestion")
     dif(v-if="xp_step==1" @nextfeedxp="nextquestion")
-    part3d(v-if="xp_step==2" @nextfeedxp="nextquestion")
-    com(v-if="xp_step==3" @nextfeedxp="nextquestion")
+    com(v-if="xp_step==2" @nextfeedxp="nextquestion")
 </template>
 
 <script>
 import globxp from './micro-cpt/micro-feeds-globxp.vue'
 import dif from './micro-cpt/micro-feeds-difficulty.vue'
-import part3d from './micro-cpt/micro-feeds-participation3d.vue'
 import com from './micro-cpt/micro-feeds-comments.vue'
 
 export default {
@@ -40,39 +38,43 @@ export default {
   components : { 
     globxp,
     dif,
-    part3d,
     com
   },
   data () {
     return {
-      xp_step:0,
-      json_answer:{}
+      xp_step:0
     }
   },
   methods: {
+    //next question
     nextquestion(data){
-      // save location and add step if needed
+      
+      /** Step handling **/
+
       if(this.xp_step==0){
-        this.json_answer["smile"] = data;
+        // Shape answer and send to db
+        this.send("smile",data)
         this.xp_step++;
         return;
       }
       if(this.xp_step==1){
-        this.json_answer["difficulty"] = data;
+        this.send("difficulty",data)
         this.xp_step++;      
         return;
       }
       if(this.xp_step==2){
-        this.json_answer["opinion3dpart"] = data;
-        this.xp_step++;
-        return;
-      }
-      if(this.xp_step==3){
-        this.json_answer["comment"] = data;
+        this.send("comment",data)
       }
       //save and pass next question
       this.$emit('nextfeedstep',this.json_answer);
     },
+      /**
+     * Send data to db hadler
+     */
+    send(question_name,data_to_save){
+      let json_answer = { [question_name] : data_to_save }
+      this.$emit('save_db',json_answer);
+    }
   }
 }
 </script>

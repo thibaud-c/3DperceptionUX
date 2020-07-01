@@ -1,5 +1,5 @@
 {
 	"URL_BACKEND":"http://localhost:1337/",
-	"URL_GETCONFIG":"api/v1/config/",
-	"URL_SETANSWER":"api/v1/"
+	"URL_POSTDATA":"api/v1/",
+	"IP_INFO_TOKEN":"d70f9f60c4df6d"
 }
