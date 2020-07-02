@@ -114,7 +114,7 @@ export default {
         return;
       }
       if(this.step == 4){
-        return
+        return;
       }
     },
     /**
@@ -138,7 +138,7 @@ export default {
       Send data to db *PUT*
     */
     async save_data(data) {
-      console.log("saved:",data)
+      console.log("saved:",data);
       // Get config from back end
       let path = GConfig.URL_BACKEND + GConfig.URL_POSTDATA + this.id_poste;
       try{
@@ -185,7 +185,7 @@ export default {
         let response = await axios.get('https://ipinfo.io?token='+GConfig.IP_INFO_TOKEN+'&format=json');
         return response.data;
       }catch(err){
-        console.log(err)
+        console.log(err);
       }
     },
     /**
@@ -247,11 +247,11 @@ export default {
     //set id
     this.id_poste = this.uuidv4();
     //set date
-    this.starting_date = new Date()
+    this.starting_date = new Date();
     // collect user info 
-    this.init_userinfo()
+    this.init_userinfo();
     // init user configs
-    this.init_user_configs()
+    this.init_user_configs();
   }
 }
 </script>

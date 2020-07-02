@@ -14,6 +14,7 @@ class UserModel(db.Model):
   # init
   user_guid = db.Column(db.String(36), unique=True, primary_key=True)
   start_at = db.Column(db.DateTime)
+  end_at = db.Column(db.DateTime)
   language = db.Column(db.Integer)
   version = db.Column(db.Integer)
   scenes_order = db.Column(db.ARRAY(db.Integer))
@@ -66,6 +67,7 @@ class UserModel(db.Model):
     # INIT
     self.user_guid = data.get('user_guid')
     self.start_at = data.get('start_at')
+    self.end_at = data.get('end_at')
     self.language = data.get('language')
     self.version = data.get('version')
     self.scenes_order = data.get('scenes_order')
@@ -141,6 +143,7 @@ class UserSchema(Schema):
   # INIT
   user_guid = fields.Str(required=False)
   start_at = fields.DateTime(required=False)
+  end_at = fields.DateTime(required=False)
   language = fields.Int(required=False)
   version = fields.Int(required=False)
   scenes_order = fields.List(fields.Int(required=False))

@@ -2,6 +2,7 @@
     // init create user
     "user_guid":"GUID",
     "start_at":"date",
+    "end_at":"date",
     "language":["INT","0->en","1->fr"],
     "version":"INT",
     "scenes_order":"[INT]",

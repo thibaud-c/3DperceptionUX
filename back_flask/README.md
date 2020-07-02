@@ -6,6 +6,7 @@ $ python run.py
 ## PROD
 pipenv install
 pipenv shell
+pipenv install python-dotenv
 pm2 start run.py
 
 
@@ -38,6 +39,7 @@ CREATE TABLE public.perception_ux
 (
     user_guid character varying(36) COLLATE pg_catalog."default",
     start_at timestamp with time zone,
+    end_at timestamp with time zone,
     language integer,
     version integer
     scenes_order integer[],

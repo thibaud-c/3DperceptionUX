@@ -75,8 +75,17 @@ export default {
       questions:["perc-lod-leaflet-light","perc-lod-height-light","perc-lod-view","perc-lod-low-light"]
     }
   },
+  methods:{
+      /**
+     * Send data to db hadler
+     */
+    send(question_name,data_to_save){
+      let json_answer = { [question_name] : data_to_save }
+      this.$emit('save_db',json_answer);
+    },
+  },
   mounted(){
-
+    this.results=[[true,true,true],[true,true,true],[false,true,true,true],[false,true,true,true],[false,true],[false,true]]
     /** Grade **/
 
     let flatten_result = this.results.flat();
@@ -112,7 +121,12 @@ export default {
     // get index of max
     this.best_question = t_arr_q.indexOf(Math.max(...t_arr_q));
     this.worst_question = f_arr_q.indexOf(Math.max(...f_arr_q));
-  }
+
+    
+    // Send end time to db 
+    this.send("end_at",new Date())
+  }    
+
 }
 </script>
 
