@@ -27,7 +27,7 @@ SOFTWARE.
     buldingnb(v-if="step==1" @nextfeedstep="addStep" @save_db="send_data")
     feedbacks(v-if="step==2"  @nextfeedstep="addStep" @save_db="send_data")
     email(v-if="step==3" @nextfeedstep="addStep" @save_db="send_data")
-    thankyou(v-if="step==4" :results="results" @nextfeedstep="addStep" @save_db="send_data")
+    thankyou(v-if="step==4" :results="results" :id="id_user" @nextfeedstep="addStep" @save_db="send_data")
 </template>
 
 <script>
@@ -39,7 +39,7 @@ import thankyou from './components/fd-thankyou.vue'
 
 export default {
   name: 'feedback',
-  props: ["user_name","results"],
+  props: ["user_name","results","id_user"],
   components : { 
     // liste des composants utilisés dans la div principale
     intro,

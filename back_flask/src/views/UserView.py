@@ -1,5 +1,6 @@
 from flask import request, json, Response, Blueprint, g
 from ..models.UserModel import UserModel, UserSchema
+import time
 
 user_api = Blueprint('user_api', __name__)
 user_schema = UserSchema()
@@ -24,6 +25,32 @@ def create(user_id):
 
   return custom_response({"message" :message}, 201)
 
+### Get score 
+
+@user_api.route('/<user_id>/scores', methods=['GET'])
+def results(user_id):
+  """
+  Create User Function
+  """
+  users = UserModel.get_all_user()
+  scores = []
+  speeds = []
+  user_score = None
+  user_speed = None
+  for user in users:
+    if user.user_guid == user_id:
+      if user.end_at is None :
+        print("notfound -> relaunch")
+        time.sleep(0.5)
+        results(user_id)
+      user_speed = user.end_at - user.start_at
+      user_score = user.score
+    scores.append(user.score)
+    speeds.append(user.end_at - user.start_at)
+  speeds = sorted(speeds)
+  scores = sorted(scores)
+  data = {"score" :user_score,"nb_user":len(users),"top_speed":(len(users)-speeds.index(user_speed))/len(users),"top_score":1-((len(users)-scores.index(user_score))/len(users))}
+  return custom_response({"data" :data}, 201)
 
 ### Put data in user
 
@@ -44,23 +71,6 @@ def update(user_id):
     return custom_response({'error': 'data not saved'}, 404)
   #ser_user = user_schema.dump(user).data
   return custom_response({"message" :message}, 200)  
-
-
-# DELETE ?
-
-### Get User config 
-
-@user_api.route('/config/<int:user_id>', methods=['GET'])
-def get_userconfig(user_id):
-  """
-  Get a user config to order tasks
-  """
-  user_config = UserModel.get_user_config(user_id)
-  if not user_config:
-    return custom_response({'error': 'config not found'}, 404)
-  
-  return custom_response(user_config, 200)
-
 
 
 ### Delete user

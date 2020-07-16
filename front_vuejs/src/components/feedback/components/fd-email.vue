@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     //next question
-    nextquestion(data){
+    async nextquestion(data){
 
       /** Step handling **/
 
@@ -63,6 +63,7 @@ export default {
         // Shape answer and send to db
         this.send("email",data)
       }
+      
       //save and pass next question
       this.$emit('nextfeedstep');
     },

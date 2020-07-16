@@ -60,7 +60,6 @@ export default {
       if(this.step>3){
         //save database and pass next stage
         this.$emit('nextstage',this.json_answer);
-        this.step=0;
       }
     }
   }

@@ -53,11 +53,13 @@ export default {
     /**
      * handle the next step process
      */
-    nextquestion(){
+    async nextquestion(){
       //validate
       if(!this.validate()){ return; }
       // Shape answer and send to db
       this.send("estim_building",this.number)
+      // Send prevalued end_at (updated at the end) in order to calculate the scores  withpout the typing
+      await this.send("end_at",new Date())
       // pass next question
       this.$emit('nextfeedstep');
       //remove button listerner

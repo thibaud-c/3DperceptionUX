@@ -16,3 +16,7 @@ check the cfg.py
 pipenv install
 pm2 start ecosystem.config.json
 ```
+
+### 2 config files to activate (delete the "_example" and add your own data)
+back_end/cfg.py
+front_end/src/assets/config.json

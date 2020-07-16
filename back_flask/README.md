@@ -13,19 +13,19 @@ pm2 start run.py
 ## REST API
 
 ['POST'] Create User
-http://localhost:3030/api/v1/<user_id> 
+http://localhost:1337/api/v1/<user_id> 
 + config -> JSON
 
 ['GET'] GET User config
-http://localhost:3030/api/v1/config/<user_id> 
+http://localhost:1337/api/v1/config/<user_id> 
 GET config -> JSON
 
 ['PUT'] Add answers to User
-http://localhost:3030/api/v1/<user_id> 
+http://localhost:1337/api/v1/<user_id> 
 + data
 
 ['DELETE'] delete User
-http://localhost:3030/api/v1/<user_id> 
+http://localhost:1337/api/v1/<user_id> 
 
 
 
@@ -41,7 +41,7 @@ CREATE TABLE public.perception_ux
     start_at timestamp with time zone,
     end_at timestamp with time zone,
     language integer,
-    version integer
+    version integer,
     scenes_order integer[],
     answers_order integer[],
     angles_order real[],

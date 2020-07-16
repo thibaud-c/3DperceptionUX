@@ -24,9 +24,20 @@ SOFTWARE.
 <template lang="pug">
   // Last Step :)
   #rootThankYou
-    p.questiontitle.has-text-weight-semibold {{ $t('perc-tut-res-title1') + result_grade + $t('perc-tut-res-title2') }}
+    p.Maintitle.has-text-weight-semibold {{ $t('perc-tut-res-title1') + result_grade + $t('perc-tut-res-title2') }}
     br
-    div(v-if="result_grade!=100 && result_grade!=0")
+    div(v-if="badgeNB==0")
+      img.size-badge(:src="'icons/B0_Pioneer.png'")
+      p.paragraph-text.has-text-grey.has-text-centered.has-text-weight-semibold(v-html="$t('perc-tut-res-first')")
+    div(v-if="badgeNB==1")
+      img.size-badge(:src="'icons/B1_Bull.png'")
+      p.paragraph-text.has-text-grey.has-text-centered.has-text-weight-semibold(v-html="$t('perc-tut-res-accuracy1') + this.top_score + $t('perc-tut-res-accuracy2')")
+    div(v-if="badgeNB==2")
+      img.size-badge(:src="'icons/B2_Ftl.png'")
+      p.paragraph-text.has-text-grey.has-text-centered.has-text-weight-semibold(v-html="$t('perc-tut-res-fastest')+ this.top_speed + $t('perc-tut-res-accuracy2')")
+    br
+    div.divider.divider-size -
+    div(v-if="result_grade!=NAN")
       .columns
         .column.column-center
           p.paragraph-text.has-text-grey.has-text-justified(v-html="$t('feed-ty-easiest')")
@@ -57,76 +68,117 @@ SOFTWARE.
     br
     img.licorne-size.b-2(src="icons/licorne.jpg")
     br
-    p.paragraph-text.has-text-grey.has-text-justified.b-2(v-html="$t('feed-ty-contact')")
+    p.paragraph-text.has-text-grey.has-text-justified(v-html="$t('feed-ty-contact')")
+    br
+    p.paragraph-text.has-text-grey.has-text-justified.b-2(v-html="$t('end-thanks')")
 </template>
 
 <script>
+import GConfig from '../../../assets/config.json'
+import axios from 'axios';
+
 export default {
   // Last Step :) 
   name: 'fd-thankyou',
-  props:["results"],
+  props:["results","id"],
   data () {
     return {
       result_grade:0,
+      person:0,
+      top_score:null,
+      top_speed:null,
       best_scene:0,
       best_question:0,
       worst_scene:1,
       worst_question:1,
+      badgeNB:null,
       questions:["perc-lod-leaflet-light","perc-lod-height-light","perc-lod-view","perc-lod-low-light"]
     }
   },
   methods:{
-      /**
-     * Send data to db hadler
+    /**
+     * Handle badges drawing
      */
-    send(question_name,data_to_save){
-      let json_answer = { [question_name] : data_to_save }
-      this.$emit('save_db',json_answer);
+    async buildResultFromScore(scores){
+      // Score
+
+      this.result_grade = await scores.data.score;
+      this.person = scores.data.nb_user;
+      this.top_score = Math.round(scores.data.top_score*100);
+      this.top_speed = Math.round(scores.data.top_speed*100);
+      // Which badge
+      if(this.person<10){
+        this.badgeNB=0;
+        return;
+      }
+      if(this.top_score>this.top_speed){
+        this.badgeNB=1;
+        return;
+      }
+      this.badgeNB=2;
     },
+        /**
+     * Check best and worst success rate scene from user answers
+     */
+    initBestWorstScenes(){
+      let t_arr_s = [];
+      let f_arr_s = [];
+      this.results.forEach(el=>{
+        // [true count, false count]
+        t_arr_s.push(el.reduce((pre, cur) => (cur) ? ++pre : pre, 0));
+        // == false to avoid undefined value with !cur
+        f_arr_s.push(el.reduce((pre, cur) => (cur==false) ? ++pre : pre, 0));
+      })
+      // get index of max
+      this.best_scene = t_arr_s.indexOf(Math.max(...t_arr_s));
+      this.worst_scene = f_arr_s.indexOf(Math.max(...f_arr_s));
+    },
+    /**
+     * Check best and worst success rate question from user answers
+     */
+    initBestWorstQuestions(){
+      // inverse line column were max -> id 2
+      let tsp_array = this.results[2].map((_, colIndex) => this.results.map(row => row[colIndex]));
+      let t_arr_q = [];
+      let f_arr_q = [];
+      tsp_array.forEach(el=>{
+        // [true count, false count]
+        t_arr_q.push(el.reduce((pre, cur) => (cur) ? ++pre : pre, 0));
+        // == false to avoid undefined value with !cur
+        f_arr_q.push(el.reduce((pre, cur) => (cur==false) ? ++pre : pre, 0));
+      });
+      // get index of max
+      this.best_question = t_arr_q.indexOf(Math.max(...t_arr_q));
+      this.worst_question = f_arr_q.indexOf(Math.max(...f_arr_q));
+    },
+    /**
+     * Get scores from db
+     */
+    async getScoresFromDB(){
+      // Get config from back end
+      let path = GConfig.URL_BACKEND + GConfig.URL_POSTDATA + this.id + "/scores";
+      try{
+        //Request
+        let response = await axios.get(path);
+        return await response.data;        
+      }catch(err) {
+        console.log(err);     
+      }
+    }
   },
-  mounted(){
-    this.results=[[true,true,true],[true,true,true],[false,true,true,true],[false,true,true,true],[false,true],[false,true]]
-    /** Grade **/
-
-    let flatten_result = this.results.flat();
-    // nb of occurence true / by total false, true
-    this.result_grade = Math.round(flatten_result.reduce((pre, cur) => (cur) ? ++pre : pre, 0) / flatten_result.length *100);
-    
+  async mounted(){
     /** Get best/worst scenes **/
-
-    let t_arr_s = [];
-    let f_arr_s = [];
-    this.results.forEach(el=>{
-      // [true count, false count]
-      t_arr_s.push(el.reduce((pre, cur) => (cur) ? ++pre : pre, 0));
-      // == false to avoid undefined value with !cur
-      f_arr_s.push(el.reduce((pre, cur) => (cur==false) ? ++pre : pre, 0));
-    })
-    // get index of max
-    this.best_scene = t_arr_s.indexOf(Math.max(...t_arr_s));
-    this.worst_scene = f_arr_s.indexOf(Math.max(...f_arr_s));
+    this.initBestWorstScenes()
 
     /** Get best/worst question **/
+    this.initBestWorstQuestions()
 
-    // inverse line column were max -> id 2
-    let tsp_array = this.results[2].map((_, colIndex) => this.results.map(row => row[colIndex]));
-    let t_arr_q = [];
-    let f_arr_q = [];
-    tsp_array.forEach(el=>{
-      // [true count, false count]
-      t_arr_q.push(el.reduce((pre, cur) => (cur) ? ++pre : pre, 0));
-      // == false to avoid undefined value with !cur
-      f_arr_q.push(el.reduce((pre, cur) => (cur==false) ? ++pre : pre, 0));
-    });
-    // get index of max
-    this.best_question = t_arr_q.indexOf(Math.max(...t_arr_q));
-    this.worst_question = f_arr_q.indexOf(Math.max(...f_arr_q));
-
-    
+    /** Get data from db **/
+    this.buildResultFromScore(await this.getScoresFromDB());
+         
     // Send end time to db 
-    this.send("end_at",new Date())
+    await this.send("end_at",new Date())
   }    
-
 }
 </script>
 
@@ -136,6 +188,9 @@ export default {
 }
 .size-diff{
   width:80%;
+}
+.size-badge{
+  width:30%;
 }
 .divider-size{
   width:50%;

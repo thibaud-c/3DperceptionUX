@@ -23,6 +23,12 @@ SOFTWARE.
 */
 <template lang="pug">
   #Main
+    // modal previous
+    .modal(:class="ismodalprev?'is-active':''")
+      .modal-background
+      .modal-card
+        section.modal-card-body {{ $t('verif-no-previous') }}
+        button.button.is-success(@click='ismodalprev=false;stayonpage()') {{ $t('btn-ok') }}
     .level
       //stepper + language button 
       stepper(:steps.sync="step")
@@ -33,7 +39,7 @@ SOFTWARE.
       welcome(v-if="step==0" @nextstage="add_step")
       socio(v-if="step==1" :user_name="user_name" @nextstage="add_step" @send_data_to_db="save_data")
       perception(v-if="step==2" :user_name="user_name" :scene_order="scene_order" :answer_order="answer_order" :scene_angles="scene_angles" @send_data_to_db="save_data" @nextstage="add_step")
-      feedback(v-if="step==3" :user_name="user_name" :results="given_answer" @nextstage="add_step" @send_data_to_db="save_data")
+      feedback(v-if="step==3" :user_name="user_name" :id_user="id_poste" :results="given_answer" @nextstage="add_step" @send_data_to_db="save_data")
 </template>
   
 <script>
@@ -60,6 +66,7 @@ export default {
   },
   data () {
     return {
+      ismodalprev:false,
       version:1,
       id_poste:"",
       starting_date:"",
@@ -81,7 +88,6 @@ export default {
       Launch to next step
     */
     async add_step(json) {
-      
       // init user welcome phase  
       if(this.step == 0){
         // init user Given Name
@@ -110,6 +116,12 @@ export default {
       }
       if(this.step == 2){
         this.given_answer = json;
+        /** Score calucation & push db **/
+        let flatten_result = this.given_answer.flat();
+        // nb of occurence true / by total false, true
+        let score = Math.round(flatten_result.reduce((pre, cur) => (cur) ? ++pre : pre, 0) / flatten_result.length *100);
+        this.save_data({"score":score})
+
         this.step++;
         return;
       }
@@ -237,11 +249,23 @@ export default {
         // 0-5 + 0-360 in rad
         this.scene_angles.push([(40 + Math.random() * 5) * Math.PI/180, Math.random() * 360 * Math.PI/180]); 
       } 
+    },
+    /**  
+     * Previous button handling -> close: stay on page and hide modal 
+    */
+    stayonpage(){
+      this.ismodalprev = false;
     }
   },
-
   //** INIT **//
-  mounted(){    
+  mounted(){
+    // handle previous history arrow
+    history.pushState(null, null, window.location);
+    window.onpopstate = () => {
+      this.ismodalprev = true;
+      history.go(1);
+    };
+
     //set default language
     this.$i18n.locale = "en"
     //set id

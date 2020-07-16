@@ -1,5 +1,7 @@
 .DS_Store
 front_vuejs/node_modules
 front_vuejs/dist
+front_vuejs/src/assets/config.json
 Analysis
 back_flask/Flask.log
+back_flask/cfg.py

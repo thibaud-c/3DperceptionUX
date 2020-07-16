@@ -39,7 +39,7 @@ export default {
       this.$emit('nextfeedstep')
       //remove button listerner
       s_methods.remove_entertonext()
-    }
+    },
   },
   mounted(){
     //add next with enter

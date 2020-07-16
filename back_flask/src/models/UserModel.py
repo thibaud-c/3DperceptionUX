@@ -58,6 +58,7 @@ class UserModel(db.Model):
   comment = db.Column(db.String(1024), nullable=False)
   followup = db.Column(db.Integer, nullable=False)
   email = db.Column(db.String(256), nullable=False)
+  score = db.Column(db.Integer, nullable=False)
 
   # class constructor
   def __init__(self, data):
@@ -111,6 +112,7 @@ class UserModel(db.Model):
     self.comment = data.get('comment')
     self.followup = data.get('followup')
     self.email = data.get('email')
+    self.score = data.get('score')
 
   def create_user(self):
     db.session.add(self)
@@ -133,8 +135,8 @@ class UserModel(db.Model):
     return UserModel.query.get(id)
 
   @staticmethod
-  def get_user_config(id):
-    return UserModel.query.filter_by(id_poste=id).first().config
+  def get_all_user():
+    return UserModel.query.filter(UserModel.score != None).all()
   
   def __repr(self):
     return '<id {}>'.format(self.id)
@@ -187,3 +189,4 @@ class UserSchema(Schema):
   comment = fields.Str(required=False)
   followup = fields.Int(required=False)
   email = fields.Str(required=False)
+  score = fields.Int(required=False)
