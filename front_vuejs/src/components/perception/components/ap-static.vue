@@ -80,7 +80,7 @@ export default {
         //no map selected -> get the good expected answer
         if(data["res"]==null){this.map_selected=this.expected_answers[4];}
         // Shape answer and send to db
-        this.send("E4Q0",data)
+        this.send("E5Q0",data)
         // next step
         this.statstep++;
         return;
@@ -91,7 +91,7 @@ export default {
         // Save to user results
         this.given_answers.push(data["res"]);
         // Shape answer and send to db
-        this.send("E4Q1",data)
+        this.send("E5Q1",data)
         this.statstep++;
         return;
       }

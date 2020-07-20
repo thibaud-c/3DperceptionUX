@@ -35,6 +35,10 @@
     "E3Q1":["JSON","no_answer:length->4","ANSWER:0","TALL","Budapest"],
     "E3Q2":["JSON","no_answer:length->4","ANSWER:0","VIEW","Budapest"],
     "E3Q3":["JSON","no_answer:length->4","ANSWER:0","LOW","Budapest"],
+    "E4Q0":["JSON","no_answer:length->4","ANSWER:0","MAP","Mexico"],
+    "E4Q1":["JSON","no_answer:length->4","ANSWER:0","TALL","Mexico"],
+    "E5Q0":["JSON","no_answer:length->4","ANSWER:0","MAP","Madrid"],
+    "E5Q1":["JSON","no_answer:length->4","ANSWER:0","TALL","Madrid"],
     // Feedbacks
     "pref_hard":["int","noanswer->4"],
     "pref_easy":["int","noanswer->4"],

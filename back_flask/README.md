@@ -41,7 +41,6 @@ CREATE TABLE public.perception_ux
     start_at timestamp with time zone,
     end_at timestamp with time zone,
     language integer,
-    version integer,
     scenes_order integer[],
     answers_order integer[],
     angles_order real[],
@@ -70,6 +69,10 @@ CREATE TABLE public.perception_ux
     "E3Q1" json,
     "E3Q2" json,
     "E3Q3" json,
+    "E4Q0" json,
+    "E4Q1" json,
+    "E5Q0" json,
+    "E5Q1" json,
     pref_hard integer,
     pref_easy integer,
     pref_memory integer,
@@ -79,8 +82,9 @@ CREATE TABLE public.perception_ux
     difficulty integer,
     comment character varying(1024) COLLATE pg_catalog."default",
     followup integer,
-    email character varying(256) COLLATE pg_catalog."default"
-
+    email character varying(256) COLLATE pg_catalog."default",
+    version integer,
+    score integer
 )
 
 TABLESPACE pg_default;

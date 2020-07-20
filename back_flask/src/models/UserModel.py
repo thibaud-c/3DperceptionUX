@@ -47,6 +47,10 @@ class UserModel(db.Model):
   E3Q1 = db.Column(JSON, nullable=False)
   E3Q2 = db.Column(JSON, nullable=False)
   E3Q3 = db.Column(JSON, nullable=False)
+  E4Q0 = db.Column(JSON, nullable=False)
+  E4Q1 = db.Column(JSON, nullable=False)
+  E5Q0 = db.Column(JSON, nullable=False)
+  E5Q1 = db.Column(JSON, nullable=False)
   # Feedback
   pref_hard = db.Column(db.Integer, nullable=False)
   pref_easy = db.Column(db.Integer, nullable=False)
@@ -101,6 +105,10 @@ class UserModel(db.Model):
     self.E3Q1 = data.get('E3Q1')
     self.E3Q2 = data.get('E3Q2')
     self.E3Q3 = data.get('E3Q3')
+    self.E4Q0 = data.get('E4Q0')
+    self.E4Q1 = data.get('E4Q1')
+    self.E5Q0 = data.get('E5Q0')
+    self.E5Q1 = data.get('E5Q1')
     # Feedback
     self.pref_hard = data.get('pref_hard')
     self.pref_easy = data.get('pref_easy')
@@ -178,6 +186,10 @@ class UserSchema(Schema):
   E3Q1 = fields.Dict(required=False)
   E3Q2 = fields.Dict(required=False)
   E3Q3 = fields.Dict(required=False)
+  E4Q0 = fields.Dict(required=False)
+  E4Q1 = fields.Dict(required=False)
+  E5Q0 = fields.Dict(required=False)
+  E5Q1 = fields.Dict(required=False)
   #Feedback
   pref_hard = fields.Int(required=False)
   pref_easy = fields.Int(required=False)
